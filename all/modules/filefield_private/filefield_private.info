@@ -1,0 +1,12 @@
+name = FileField Private Downloads
+description = "Adds private file download options when using FileField."
+core = 6.x
+package = CCK
+dependencies[] = filefield
+
+; Information added by drupal.org packaging script on 2011-06-04
+version = "6.x-2.x-dev"
+core = "6.x"
+project = "filefield_private"
+datestamp = "1307189283"
+

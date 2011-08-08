@@ -1,0 +1,8 @@
+core = "6.x"
+dependencies[] = "commons_profile"
+dependencies[] = "features_override"
+description = "A custom profile for JRST"
+features[ctools][] = "features_override:features_override:1"
+features[features_override][] = "jrst_profile_customizations"
+name = "JRST Custom Profile"
+package = "Features"

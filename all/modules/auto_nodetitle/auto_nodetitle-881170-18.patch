@@ -1,0 +1,45 @@
+From 5c367d7fafb65040cd41ecaee21be515d57cef0f Mon Sep 17 00:00:00 2001
+From: Tim Plunkett <git@plnktt.com>
+Date: Thu, 19 May 2011 11:49:16 -0400
+Subject: [PATCH] Issue #881170 by tim.plunkett, phayes, rupl: Add Features support to Automatic Nodetitles.
+
+---
+ auto_nodetitle.module |   25 +++++++++++++++++++++++++
+ 1 files changed, 25 insertions(+), 0 deletions(-)
+
+diff --git a/auto_nodetitle.module b/auto_nodetitle.module
+index c35a271..1ab1526 100644
+--- a/auto_nodetitle.module
++++ b/auto_nodetitle.module
+@@ -255,3 +255,28 @@ function auto_nodetitle_node_type($op, $info) {
+       break;
+   }
+ }
++
++/**
++ * Implementation of hook_features_pipe_COMPONENT_alter().
++ */
++function auto_nodetitle_features_pipe_node_alter(&$pipe, $data, $export) {
++  if (!empty($data)) {
++    $map = features_get_default_map('variable');
++    $variables = array(
++      'ant',
++      'ant_pattern',
++      'ant_php',
++    );
++    foreach ($data as $node_type) {
++      foreach ($variables as $variable_name) {
++        $variable_name = "{$variable_name}_{$node_type}";
++        if (isset($map[$variable_name]) && $map[$variable_name] != $module_name) {
++          $export['dependencies'][$map[$variable_name]] = $map[$variable_name];
++        }
++        else {
++          $pipe['variable'][] = $variable_name;
++        }
++      }
++    }
++  }
++}
+-- 
+1.7.3.2
+

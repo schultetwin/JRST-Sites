@@ -1,0 +1,8 @@
+core = "6.x"
+dependencies[] = "commons_core"
+dependencies[] = "features_override"
+description = "User Terms Override"
+features[ctools][] = "features_override:features_override:1"
+features[features_override][] = "jrst_user_terms"
+name = "JRST User Terms"
+package = "Features"

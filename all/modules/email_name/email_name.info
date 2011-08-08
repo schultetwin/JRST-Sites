@@ -1,0 +1,4 @@
+name = Email Name (for Email Register) 
+description = "Set User Name to Proper Name"
+core = 6.x
+dependencies[] = email_registration

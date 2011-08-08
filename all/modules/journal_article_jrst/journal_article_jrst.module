@@ -1,0 +1,28 @@
+<?php
+
+include_once('journal_article_jrst.features.inc');
+
+function journal_article_jrst_flag_default_flags() {
+  $flags = array();
+  $flags[] = array(
+    'content_type' => 'node',
+    'name' => 'article_plus_1',
+    'title' => 'Like',
+    'roles' => array('2'),
+    'global' => FALSE,
+    'types' => array('article'),
+    'flag_short' => 'Like',
+    'flag_long' => 'Show support for this article',
+    'flag_message' => '',
+    'unflag_short' => 'Unlike',
+    'unflag_long' => 'Remove support for this article',
+    'unflag_message' => '',
+    'show_on_page' => TRUE,
+    'show_on_teaser' => FALSE,
+    'show_on_form' => FALSE,
+    'status' => TRUE,
+    'locked' => array('name', 'types', 'roles', 'global'),
+  );
+  return $flags;
+}
+?>

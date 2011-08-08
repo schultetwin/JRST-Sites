@@ -1,0 +1,11 @@
+<?php
+
+function email_name_email_registration_name($edit, $account) {
+  dsm($account);
+  if (isset($edit['profile_name']) && isset($edit_profile['profile_last_name'])) {
+    $name = trim($edit['profile_name']) . ' ' . trim($edit['profile_last_name']);
+    dsm($name);
+    return $name;
+  }
+  return;
+}

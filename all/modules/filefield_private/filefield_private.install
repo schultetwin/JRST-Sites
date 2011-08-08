@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implementation of hook_enable().
+ */
+function filefield_private_enable() {
+  // Insure the directory exists when enabling the module.
+  filefield_private_add_directory();
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function filefield_private_uninstall() {
+  // Delete variables.
+  variable_del('filefield_private_directory_path');
+}
+
+// Some of this code was blatenly stolen from private_upload.module
+
+/**
+ * Implementation of hook_requirements().
+ */
+function filefield_private_requirements($phase) {
+  if ($phase == 'runtime') {
+    $public = file_directory_path();
+
+    $private = variable_get('filefield_private_directory_path', $public . FILEFIELD_PRIVATE_DEFAULT_DIRECTORY);
+
+    // First do some checking to see if path is withing public.
+    // Can't create/make directory if not.
+    if (!filefield_private_add_directory()) {
+      $requirements['filefield_private_writable'] = array(
+        'title' => t('Filefield Private'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Private Downloads directory is not writable'),
+        'description' => t('Please make sure directory !dir exists and is writable.', array('!dir' => $private)),
+      );
+    }
+
+    if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
+      $requirements['filefield_private_method'] = array(
+        'title' => t('Filefield Private'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Private Downloads'),
+        'description' => t('Filefield Private will not work with file upload method set to private. Please enable <a href="!url">Public File Transfer</a>.', array('!url' => url('admin/settings/file-system'))),
+      );
+    }
+
+    if (!$requirements) { // success
+      $requirements['filefield_private'] = array(
+        'title' => t('Filefield Private'),
+        'severity' => REQUIREMENT_OK,
+        'value' => t('Filefield Private is correctly configured and secure.'),
+      );
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Add the private filefield directory if in files directory.
+ */
+function filefield_private_add_directory() {
+  $public = file_directory_path();
+  $private = variable_get('filefield_private_directory_path', $public . FILEFIELD_PRIVATE_DEFAULT_DIRECTORY);
+  if (file_check_location($private, $public) && $private != $public) {
+    if (file_check_directory($private, FILE_CREATE_DIRECTORY)) {
+      if (!file_exists($private .'/.htaccess')) {
+        filefield_private_add_htacess();
+      }
+      return TRUE;
+    }
+    // The directory is inside of the files directory but can't be
+    // created. Ouch!
+    return FALSE;
+  }
+  // The private directory is outside of the file directory, can't create.
+  // but don't want to say there was problems.
+  return TRUE;
+}
+
+/**
+ * Callback to inject an .htaccess file into the filefield_private_path folder
+ */
+function filefield_private_add_htacess() {
+  $public = file_directory_path();
+  $private = variable_get('filefield_private_directory_path', $public . FILEFIELD_PRIVATE_DEFAULT_DIRECTORY);
+  $path = file_create_path($private .'/.htaccess' );
+  file_save_data( "SetHandler This_is_a_Drupal_security_line_do_not_remove
+Deny from all", $path, FILE_EXISTS_REPLACE );
+}

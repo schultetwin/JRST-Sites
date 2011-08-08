@@ -1,0 +1,3 @@
+<?php
+
+include_once('protected_file_downloads.features.inc');

@@ -1,0 +1,3 @@
+<?php
+
+include_once('jrst_user_terms.features.inc');

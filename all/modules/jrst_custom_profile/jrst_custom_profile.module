@@ -1,0 +1,3 @@
+<?php
+
+include_once('jrst_custom_profile.features.inc');
