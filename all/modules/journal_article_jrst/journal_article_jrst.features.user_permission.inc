@@ -54,12 +54,42 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
+  // Exported permission: edit field_article_ae_recommendation
+  $permissions['edit field_article_ae_recommendation'] = array(
+    'name' => 'edit field_article_ae_recommendation',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_assoc_editor
+  $permissions['edit field_article_assoc_editor'] = array(
+    'name' => 'edit field_article_assoc_editor',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_article_author
   $permissions['edit field_article_author'] = array(
     'name' => 'edit field_article_author',
     'roles' => array(
       '0' => 'site admin',
     ),
+  );
+
+  // Exported permission: edit field_article_coauthor
+  $permissions['edit field_article_coauthor'] = array(
+    'name' => 'edit field_article_coauthor',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_country
+  $permissions['edit field_article_country'] = array(
+    'name' => 'edit field_article_country',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_decision_date
+  $permissions['edit field_article_decision_date'] = array(
+    'name' => 'edit field_article_decision_date',
+    'roles' => array(),
   );
 
   // Exported permission: edit field_article_documents
@@ -70,6 +100,18 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: edit field_article_editor
+  $permissions['edit field_article_editor'] = array(
+    'name' => 'edit field_article_editor',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_editor_projection
+  $permissions['edit field_article_editor_projection'] = array(
+    'name' => 'edit field_article_editor_projection',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_article_issue
   $permissions['edit field_article_issue'] = array(
     'name' => 'edit field_article_issue',
@@ -78,17 +120,63 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: edit field_article_pages
+  $permissions['edit field_article_pages'] = array(
+    'name' => 'edit field_article_pages',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_previous_article
+  $permissions['edit field_article_previous_article'] = array(
+    'name' => 'edit field_article_previous_article',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_reviewers
+  $permissions['edit field_article_reviewers'] = array(
+    'name' => 'edit field_article_reviewers',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_scholarone_id
+  $permissions['edit field_article_scholarone_id'] = array(
+    'name' => 'edit field_article_scholarone_id',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_special_issue
+  $permissions['edit field_article_special_issue'] = array(
+    'name' => 'edit field_article_special_issue',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_status
+  $permissions['edit field_article_status'] = array(
+    'name' => 'edit field_article_status',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_submitted_date
+  $permissions['edit field_article_submitted_date'] = array(
+    'name' => 'edit field_article_submitted_date',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_type
+  $permissions['edit field_article_type'] = array(
+    'name' => 'edit field_article_type',
+    'roles' => array(),
+  );
+
+  // Exported permission: edit field_article_wiley_id
+  $permissions['edit field_article_wiley_id'] = array(
+    'name' => 'edit field_article_wiley_id',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_article_wiley_link
   $permissions['edit field_article_wiley_link'] = array(
     'name' => 'edit field_article_wiley_link',
-    'roles' => array(
-      '0' => 'site admin',
-    ),
-  );
-
-  // Exported permission: edit field_contact_author
-  $permissions['edit field_contact_author'] = array(
-    'name' => 'edit field_contact_author',
     'roles' => array(
       '0' => 'site admin',
     ),
@@ -118,6 +206,12 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: edit field_issue_special
+  $permissions['edit field_issue_special'] = array(
+    'name' => 'edit field_issue_special',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_issue_volume
   $permissions['edit field_issue_volume'] = array(
     'name' => 'edit field_issue_volume',
@@ -138,6 +232,18 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
+  // Exported permission: view field_article_ae_recommendation
+  $permissions['view field_article_ae_recommendation'] = array(
+    'name' => 'view field_article_ae_recommendation',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_assoc_editor
+  $permissions['view field_article_assoc_editor'] = array(
+    'name' => 'view field_article_assoc_editor',
+    'roles' => array(),
+  );
+
   // Exported permission: view field_article_author
   $permissions['view field_article_author'] = array(
     'name' => 'view field_article_author',
@@ -146,6 +252,24 @@ function journal_article_jrst_user_default_permissions() {
       '1' => 'authenticated user',
       '2' => 'site admin',
     ),
+  );
+
+  // Exported permission: view field_article_coauthor
+  $permissions['view field_article_coauthor'] = array(
+    'name' => 'view field_article_coauthor',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_country
+  $permissions['view field_article_country'] = array(
+    'name' => 'view field_article_country',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_decision_date
+  $permissions['view field_article_decision_date'] = array(
+    'name' => 'view field_article_decision_date',
+    'roles' => array(),
   );
 
   // Exported permission: view field_article_documents
@@ -158,6 +282,18 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: view field_article_editor
+  $permissions['view field_article_editor'] = array(
+    'name' => 'view field_article_editor',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_editor_projection
+  $permissions['view field_article_editor_projection'] = array(
+    'name' => 'view field_article_editor_projection',
+    'roles' => array(),
+  );
+
   // Exported permission: view field_article_issue
   $permissions['view field_article_issue'] = array(
     'name' => 'view field_article_issue',
@@ -168,19 +304,57 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: view field_article_pages
+  $permissions['view field_article_pages'] = array(
+    'name' => 'view field_article_pages',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_previous_article
+  $permissions['view field_article_previous_article'] = array(
+    'name' => 'view field_article_previous_article',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_reviewers
+  $permissions['view field_article_reviewers'] = array(
+    'name' => 'view field_article_reviewers',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_scholarone_id
+  $permissions['view field_article_scholarone_id'] = array(
+    'name' => 'view field_article_scholarone_id',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_special_issue
+  $permissions['view field_article_special_issue'] = array(
+    'name' => 'view field_article_special_issue',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_status
+  $permissions['view field_article_status'] = array(
+    'name' => 'view field_article_status',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_submitted_date
+  $permissions['view field_article_submitted_date'] = array(
+    'name' => 'view field_article_submitted_date',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_article_type
+  $permissions['view field_article_type'] = array(
+    'name' => 'view field_article_type',
+    'roles' => array(),
+  );
+
   // Exported permission: view field_article_wiley_link
   $permissions['view field_article_wiley_link'] = array(
     'name' => 'view field_article_wiley_link',
-    'roles' => array(
-      '0' => 'anonymous user',
-      '1' => 'authenticated user',
-      '2' => 'site admin',
-    ),
-  );
-
-  // Exported permission: view field_contact_author
-  $permissions['view field_contact_author'] = array(
-    'name' => 'view field_contact_author',
     'roles' => array(
       '0' => 'anonymous user',
       '1' => 'authenticated user',
