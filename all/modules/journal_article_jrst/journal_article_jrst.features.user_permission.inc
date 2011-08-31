@@ -54,12 +54,6 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported permission: edit field_article_ae_recommendation
-  $permissions['edit field_article_ae_recommendation'] = array(
-    'name' => 'edit field_article_ae_recommendation',
-    'roles' => array(),
-  );
-
   // Exported permission: edit field_article_assoc_editor
   $permissions['edit field_article_assoc_editor'] = array(
     'name' => 'edit field_article_assoc_editor',
@@ -92,14 +86,6 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported permission: edit field_article_documents
-  $permissions['edit field_article_documents'] = array(
-    'name' => 'edit field_article_documents',
-    'roles' => array(
-      '0' => 'site admin',
-    ),
-  );
-
   // Exported permission: edit field_article_editor
   $permissions['edit field_article_editor'] = array(
     'name' => 'edit field_article_editor',
@@ -120,21 +106,9 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
-  // Exported permission: edit field_article_pages
-  $permissions['edit field_article_pages'] = array(
-    'name' => 'edit field_article_pages',
-    'roles' => array(),
-  );
-
   // Exported permission: edit field_article_previous_article
   $permissions['edit field_article_previous_article'] = array(
     'name' => 'edit field_article_previous_article',
-    'roles' => array(),
-  );
-
-  // Exported permission: edit field_article_reviewers
-  $permissions['edit field_article_reviewers'] = array(
-    'name' => 'edit field_article_reviewers',
     'roles' => array(),
   );
 
@@ -172,14 +146,6 @@ function journal_article_jrst_user_default_permissions() {
   $permissions['edit field_article_wiley_id'] = array(
     'name' => 'edit field_article_wiley_id',
     'roles' => array(),
-  );
-
-  // Exported permission: edit field_article_wiley_link
-  $permissions['edit field_article_wiley_link'] = array(
-    'name' => 'edit field_article_wiley_link',
-    'roles' => array(
-      '0' => 'site admin',
-    ),
   );
 
   // Exported permission: edit field_issue_cover
@@ -232,12 +198,6 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported permission: view field_article_ae_recommendation
-  $permissions['view field_article_ae_recommendation'] = array(
-    'name' => 'view field_article_ae_recommendation',
-    'roles' => array(),
-  );
-
   // Exported permission: view field_article_assoc_editor
   $permissions['view field_article_assoc_editor'] = array(
     'name' => 'view field_article_assoc_editor',
@@ -272,16 +232,6 @@ function journal_article_jrst_user_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported permission: view field_article_documents
-  $permissions['view field_article_documents'] = array(
-    'name' => 'view field_article_documents',
-    'roles' => array(
-      '0' => 'anonymous user',
-      '1' => 'authenticated user',
-      '2' => 'site admin',
-    ),
-  );
-
   // Exported permission: view field_article_editor
   $permissions['view field_article_editor'] = array(
     'name' => 'view field_article_editor',
@@ -304,21 +254,9 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
-  // Exported permission: view field_article_pages
-  $permissions['view field_article_pages'] = array(
-    'name' => 'view field_article_pages',
-    'roles' => array(),
-  );
-
   // Exported permission: view field_article_previous_article
   $permissions['view field_article_previous_article'] = array(
     'name' => 'view field_article_previous_article',
-    'roles' => array(),
-  );
-
-  // Exported permission: view field_article_reviewers
-  $permissions['view field_article_reviewers'] = array(
-    'name' => 'view field_article_reviewers',
     'roles' => array(),
   );
 
@@ -350,16 +288,6 @@ function journal_article_jrst_user_default_permissions() {
   $permissions['view field_article_type'] = array(
     'name' => 'view field_article_type',
     'roles' => array(),
-  );
-
-  // Exported permission: view field_article_wiley_link
-  $permissions['view field_article_wiley_link'] = array(
-    'name' => 'view field_article_wiley_link',
-    'roles' => array(
-      '0' => 'anonymous user',
-      '1' => 'authenticated user',
-      '2' => 'site admin',
-    ),
   );
 
   // Exported permission: view field_issue_cover

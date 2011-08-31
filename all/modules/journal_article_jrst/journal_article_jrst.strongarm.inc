@@ -206,15 +206,15 @@ function journal_article_jrst_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'content_extra_weights_article';
   $strongarm->value = array(
-    'title' => '-5',
-    'body_field' => '-1',
-    'revision_information' => '7',
-    'author' => '6',
-    'options' => '8',
-    'comment_settings' => '10',
-    'menu' => '5',
-    'taxonomy' => '-3',
-    'path' => '9',
+    'title' => '13',
+    'body_field' => '18',
+    'revision_information' => '34',
+    'author' => '32',
+    'options' => '35',
+    'comment_settings' => '37',
+    'menu' => '33',
+    'taxonomy' => '16',
+    'path' => '36',
   );
 
   $export['content_extra_weights_article'] = $strongarm;

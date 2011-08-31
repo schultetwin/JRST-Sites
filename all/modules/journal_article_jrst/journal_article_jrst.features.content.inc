@@ -6,69 +6,6 @@
 function journal_article_jrst_content_default_fields() {
   $fields = array();
 
-  // Exported field: field_article_ae_recommendation
-  $fields['article-field_article_ae_recommendation'] = array(
-    'field_name' => 'field_article_ae_recommendation',
-    'type_name' => 'article',
-    'display_settings' => array(
-      'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '2' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '3' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'token' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'text',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'text',
-    'active' => '1',
-    'text_processing' => '0',
-    'max_length' => '',
-    'allowed_values' => 'Accept
-Minor Revision
-Major Revision
-Revise and Resubmit
-Reject',
-    'allowed_values_php' => '',
-    'widget' => array(
-      'default_value' => array(
-        '0' => array(
-          'value' => '',
-        ),
-      ),
-      'default_value_php' => NULL,
-      'label' => 'AE Recommendation',
-      'weight' => '22',
-      'description' => '',
-      'type' => 'optionwidgets_select',
-      'module' => 'optionwidgets',
-    ),
-  );
-
   // Exported field: field_article_assoc_editor
   $fields['article-field_article_assoc_editor'] = array(
     'field_name' => 'field_article_assoc_editor',
@@ -132,7 +69,7 @@ Reject',
       ),
       'default_value_php' => NULL,
       'label' => 'Associate Editor',
-      'weight' => '21',
+      'weight' => '26',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
@@ -199,10 +136,124 @@ Reject',
       ),
       'default_value_php' => NULL,
       'label' => 'Author',
-      'weight' => '13',
+      'weight' => '19',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
+    ),
+  );
+
+  // Exported field: field_article_available_date
+  $fields['article-field_article_available_date'] = array(
+    'field_name' => 'field_article_available_date',
+    'type_name' => 'article',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'computed',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'computed_field',
+    'active' => '1',
+    'code' => '$checklist=4;
+$edreview=14;
+$review=30;
+$ae=18;
+$editor=18;
+$randr=126;
+$major=63;
+$minor=32;
+$production=100;
+
+$year = substr($node->field_article_decision_date[0][\'value\'],0,4);
+$month = substr($node->field_article_decision_date[0][\'value\'],5,2);
+$day = substr($node->field_article_decision_date[0][\'value\'],8,2);
+
+switch ($node->field_article_decision[0][\'value\']) {
+case "Revise and Resubmit":
+   $day+=$randr+$checklist+$review+$ae+$editor;
+case "Major Revision":
+   $day+=$major+$checklist+$ae+$editor;
+case "Minor Revision":
+   $day+=$minor+$checklist+$editor;
+case "Accept":
+   $day+=$production;
+   break;
+case "Special Accept":
+   $day+=$production;
+   break;
+}
+
+if (substr($node->field_article_status[0][\'value\'],0,6) == "Review" ) {
+   $year=substr($node->field_article_submitted[0][\'value\'],0,4);
+   $month=substr($node->field_article_submitted[0][\'value\'],5,2);
+   $day=substr($node->field_article_submitted[0][\'value\'],8,2) + $minor +  $editor + $production;
+   if (substr($node->field_article_status[0][\'value\'],7,15) == \'Revision\') {
+      $day+=$review+$ae+$editor+$major+$checklist+$ae+$editor;
+      }
+   if (substr($node->field_article_status[0][\'value\'],7,19) == \'Resubmission\') {
+      $day+=$review+$ae+$editor+$randr+$checklist;
+      }
+}
+
+if ($node->field_article_status == \'Production\') {
+$day+=$production;
+}
+
+$datenew=mktime(0,0,0,$month,$day,$year);
+$result=date("Y-m-d",$datenew)."T00:00:00";
+$output=date("F Y",$datenew);
+
+If ($node->field_article_status[0][\'value\'] == "Editorial Review") {
+   $output=\'\';
+   $result=\'\';
+}
+
+$node->field_ms_date_avail[0][\'value\'] = $result;
+$node_field[0][\'value\'] = $output;',
+    'display_format' => '$display = $node_field_item[\'value\'];',
+    'store' => 1,
+    'data_type' => 'varchar',
+    'data_length' => '20',
+    'data_not_NULL' => 0,
+    'data_default' => '',
+    'data_sortable' => 1,
+    'widget' => array(
+      'default_value' => NULL,
+      'default_value_php' => NULL,
+      'label' => 'Available Date',
+      'weight' => '31',
+      'description' => '',
+      'type' => 'computed',
+      'module' => 'computed_field',
     ),
   );
 
@@ -267,7 +318,7 @@ Reject',
       ),
       'default_value_php' => NULL,
       'label' => 'Co-Authors',
-      'weight' => '14',
+      'weight' => '20',
       'description' => '',
       'type' => 'userreference_autocomplete',
       'module' => 'userreference',
@@ -336,6 +387,73 @@ Reject',
     ),
   );
 
+  // Exported field: field_article_decision
+  $fields['article-field_article_decision'] = array(
+    'field_name' => 'field_article_decision',
+    'type_name' => 'article',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => 'Special Reject
+Special Accept
+Reject
+Revise and Resubmit
+Special Revise and Resubmit
+Major Revision
+Minor Revision
+Accept
+',
+    'allowed_values_php' => '',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Decision',
+      'weight' => '30',
+      'description' => 'This marks the previous decision of the node, not it\'s current status.',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
   // Exported field: field_article_decision_date
   $fields['article-field_article_decision_date'] = array(
     'field_name' => 'field_article_decision_date',
@@ -399,86 +517,10 @@ Reject',
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'Decision Date',
-      'weight' => '19',
+      'weight' => '24',
       'description' => '',
       'type' => 'date_popup',
       'module' => 'date',
-    ),
-  );
-
-  // Exported field: field_article_documents
-  $fields['article-field_article_documents'] = array(
-    'field_name' => 'field_article_documents',
-    'type_name' => 'article',
-    'display_settings' => array(
-      'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '2' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '3' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'token' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'filefield',
-    'required' => '0',
-    'multiple' => '1',
-    'module' => 'filefield',
-    'active' => '1',
-    'list_field' => '0',
-    'list_default' => 1,
-    'description_field' => '0',
-    'widget' => array(
-      'file_extensions' => 'pdf xls xlsx doc docx ppt pptx odt ods png jpg',
-      'file_path' => 'files/articles',
-      'progress_indicator' => 'bar',
-      'max_filesize_per_file' => '',
-      'max_filesize_per_node' => '',
-      'insert' => 0,
-      'insert_styles' => array(
-        'auto' => 0,
-        'link' => 0,
-        'image' => 0,
-        'imagecache_Featured' => 0,
-        'imagecache_group_images' => 0,
-        'imagecache_group_images_featured' => 0,
-        'imagecache_group_images_medium' => 0,
-        'imagecache_group_images_showcase' => 0,
-        'imagecache_group_images_thumb' => 0,
-        'imagecache_member_list_image' => 0,
-        'imagecache_profile_pictures' => 0,
-        'imagecache_Small' => 0,
-        'imagecache_user_picture_meta' => 0,
-      ),
-      'insert_default' => 'auto',
-      'insert_class' => '',
-      'insert_width' => '',
-      'label' => 'Additional Documents',
-      'weight' => '4',
-      'description' => 'Upload any additional documents to go with the article',
-      'type' => 'filefield_widget',
-      'module' => 'filefield',
     ),
   );
 
@@ -545,7 +587,7 @@ Reject',
       ),
       'default_value_php' => NULL,
       'label' => 'Editor',
-      'weight' => '20',
+      'weight' => '25',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
@@ -607,7 +649,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Editor\'s Projection',
-      'weight' => '25',
+      'weight' => '28',
       'description' => '',
       'type' => 'optionwidgets_select',
       'module' => 'optionwidgets',
@@ -679,16 +721,16 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Issue',
-      'weight' => '-2',
+      'weight' => '17',
       'description' => 'Select the issue in which this article was published.',
       'type' => 'nodereference_select',
       'module' => 'nodereference',
     ),
   );
 
-  // Exported field: field_article_pages
-  $fields['article-field_article_pages'] = array(
-    'field_name' => 'field_article_pages',
+  // Exported field: field_article_preprod_author
+  $fields['article-field_article_preprod_author'] = array(
+    'field_name' => 'field_article_preprod_author',
     'type_name' => 'article',
     'display_settings' => array(
       'label' => array(
@@ -721,30 +763,30 @@ Not for JRST',
       ),
     ),
     'widget_active' => '1',
-    'type' => 'number_float',
+    'type' => 'text',
     'required' => '0',
     'multiple' => '0',
-    'module' => 'number',
+    'module' => 'text',
     'active' => '1',
-    'prefix' => '',
-    'suffix' => '',
-    'min' => '',
-    'max' => '',
+    'text_processing' => '0',
+    'max_length' => '',
     'allowed_values' => '',
     'allowed_values_php' => '',
     'widget' => array(
+      'rows' => 5,
+      'size' => '60',
       'default_value' => array(
         '0' => array(
           'value' => '',
-          '_error_element' => 'default_value_widget][field_article_pages][0][value',
+          '_error_element' => 'default_value_widget][field_article_preprod_author][0][value',
         ),
       ),
       'default_value_php' => NULL,
-      'label' => 'Pages',
-      'weight' => '24',
-      'description' => '',
-      'type' => 'number',
-      'module' => 'number',
+      'label' => 'Author',
+      'weight' => '14',
+      'description' => 'Field for author name before the article is put into production. After it is put into production, we will create an user account for the author, and use a node reference.',
+      'type' => 'text_textfield',
+      'module' => 'text',
     ),
   );
 
@@ -815,80 +857,10 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Previous Submission',
-      'weight' => '23',
+      'weight' => '27',
       'description' => 'If the node has had a major revision or has been resubmitted, this field will reference the old manuscript.',
       'type' => 'nodereference_autocomplete',
       'module' => 'nodereference',
-    ),
-  );
-
-  // Exported field: field_article_reviewers
-  $fields['article-field_article_reviewers'] = array(
-    'field_name' => 'field_article_reviewers',
-    'type_name' => 'article',
-    'display_settings' => array(
-      'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '2' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '3' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'token' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'userreference',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'userreference',
-    'active' => '1',
-    'referenceable_roles' => array(
-      '8' => 8,
-      '2' => 0,
-      '7' => 0,
-      '3' => 0,
-      '4' => 0,
-      '6' => 0,
-      '5' => 0,
-    ),
-    'referenceable_status' => '',
-    'advanced_view' => '--',
-    'advanced_view_args' => '',
-    'widget' => array(
-      'autocomplete_match' => 'contains',
-      'size' => 60,
-      'reverse_link' => 0,
-      'default_value' => array(
-        '0' => array(
-          'uid' => '',
-        ),
-      ),
-      'default_value_php' => NULL,
-      'label' => 'Reviewers',
-      'weight' => 0,
-      'description' => '',
-      'type' => 'userreference_select',
-      'module' => 'userreference',
     ),
   );
 
@@ -1007,7 +979,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Special Issue',
-      'weight' => '16',
+      'weight' => '21',
       'description' => '',
       'type' => 'optionwidgets_onoff',
       'module' => 'optionwidgets',
@@ -1059,14 +1031,7 @@ Not for JRST',
     'allowed_values' => 'Editorial Review
 Review
 Review Revision
-Special Reject
-Special Accept
-Reject
-Revise and Resubmit
-Special Revise and Resubmit
-Major Revision
-Minor Revision
-Accept
+Review Resubmission
 Production',
     'allowed_values_php' => '',
     'widget' => array(
@@ -1077,7 +1042,7 @@ Production',
       ),
       'default_value_php' => NULL,
       'label' => 'Status',
-      'weight' => '18',
+      'weight' => '23',
       'description' => '',
       'type' => 'optionwidgets_select',
       'module' => 'optionwidgets',
@@ -1147,7 +1112,7 @@ Production',
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'Date Submitted',
-      'weight' => '17',
+      'weight' => '22',
       'description' => '',
       'type' => 'date_popup',
       'module' => 'date',
@@ -1209,7 +1174,7 @@ Production',
       'rows' => 5,
       'size' => '60',
       'label' => 'Type',
-      'weight' => '26',
+      'weight' => '29',
       'description' => '',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -1272,68 +1237,6 @@ Production',
       'default_value_php' => NULL,
       'label' => 'Wiley Id',
       'weight' => '12',
-      'description' => '',
-      'type' => 'text_textfield',
-      'module' => 'text',
-    ),
-  );
-
-  // Exported field: field_article_wiley_link
-  $fields['article-field_article_wiley_link'] = array(
-    'field_name' => 'field_article_wiley_link',
-    'type_name' => 'article',
-    'display_settings' => array(
-      'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '2' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '3' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'token' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'text',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'text',
-    'active' => '1',
-    'text_processing' => '0',
-    'max_length' => '',
-    'allowed_values' => '',
-    'allowed_values_php' => '',
-    'widget' => array(
-      'rows' => 5,
-      'size' => '60',
-      'default_value' => array(
-        '0' => array(
-          'value' => '',
-          '_error_element' => 'default_value_widget][field_article_wiley_link][0][value',
-        ),
-      ),
-      'default_value_php' => NULL,
-      'label' => 'Wiley Link',
-      'weight' => '3',
       'description' => '',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -1680,29 +1583,26 @@ Production',
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('AE Recommendation');
-  t('Additional Documents');
   t('Associate Editor');
   t('Author');
+  t('Available Date');
   t('Co-Authors');
   t('Country');
   t('Cover Art');
   t('Date Submitted');
+  t('Decision');
   t('Decision Date');
   t('Editor');
   t('Editor\'s Projection');
   t('Issue');
-  t('Pages');
   t('Previous Submission');
   t('Publication date');
-  t('Reviewers');
   t('ScholarOne ID');
   t('Special Issue');
   t('Status');
   t('Type');
   t('Volume');
   t('Wiley Id');
-  t('Wiley Link');
 
   return $fields;
 }

@@ -373,3 +373,4 @@ function mc_import_parse_body($body, $type = 'full') {
   $array_keys();
   $body = explode(';', $body);
 }
+
