@@ -1,0 +1,113 @@
+<?php
+// $Id: cck_required_by_role.module,v 1.5 2009/08/18 22:37:11 jdwfly Exp $ 
+/**
+ * @file
+ * Allows certain user roles to be exempt from required fields
+ * 
+ * This module was patterned after the form_markup module and
+ * in many respects works very much the same way. Usually when
+ * the required value is set on a field you always want it to be
+ * required. There are some cases when it is handy that a certain
+ * user role can be exempt from certain fields being required. That
+ * is what this module does. It allows the user to set, per field,
+ * whether some roles should be exempt if the field is required.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function cck_required_by_role_form_alter(&$form, $form_state, $form_id) {
+  if (isset($form['type']) && $form['type']['#value'] .'_node_form' == $form_id) {
+    cck_required_by_role_add_group($form);
+  }
+  else if ('content_add_more_js' == $form_id) {
+    cck_required_by_role_add_group($form);
+  }
+  else if ($form_id == 'content_field_edit_form') {
+    cck_required_by_role_admin_form($form);
+  }
+}
+
+/**  
+ * Takes away the required status if the user role is exempt
+ * 
+ * @param &$form
+ *  the current form that is being worked on
+ *  
+ */
+function cck_required_by_role_add_group(&$form) {
+  $fields = content_fields(NULL, $form['type']['#value']);
+  if (is_array($fields)) {
+    foreach ($fields as $field_name => $field) {
+      if (is_array($form[$field_name])) {
+        // If the user viewing the form has an exempt role change #required to 0
+        global $user;
+        $user_roles = user_roles(FALSE);
+        if (isset($field['widget']['roles'])) {
+          foreach ($field['widget']['roles'] as $rid => $value) {
+            if ($value == $rid && in_array($user_roles[$rid], $user->roles)) {
+              $form[$field_name]['#required'] = 0;
+              foreach ($form[$field_name] as $key => $values) {
+                if (is_array($field_name[$key])) {
+                  $form[$field_name][$key]['#required'] = 0;
+                }
+              }
+            $form[$field_name][0]['#required'] = 0;
+            }
+          }
+        }
+      }
+    } 
+  }
+}
+
+/** 
+ * Additional form fields for the content_admin_field form to set exempt roles
+ */
+function cck_required_by_role_admin_form(&$form) {
+  $form['field']['cck_required_by_role'] = array(
+    '#type' => 'fieldset',
+    '#tree' => TRUE,
+    '#title' => t('Required by Role'),
+    '#collapsible' => TRUE,
+    '#description' => t('Allow these roles to be exempt from filling in this field'),
+  );
+  $roles = user_roles(FALSE);
+  $form['field']['cck_required_by_role']['roles'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Roles'),
+    '#default_value' => _cck_required_by_role_get_default_value($form['type_name']['#value'], $form['field_name']['#value'], 'roles'),
+    '#options' => $roles,
+  );
+   $form['#submit'][] = 'cck_required_by_role_submit';
+}
+
+/** 
+ * Additional submit handler on content_admin_field form
+ *
+ * writes exempt role values to the widget settings and clears again the cache
+ */
+function cck_required_by_role_submit($form_id, &$form_state) {
+  $field = content_fields($form_state['values']['field_name'], $form_state['values']['type_name']);
+  $widget_settings = $field['widget'];
+  $widget_settings['roles'] = $form_state['values']['cck_required_by_role']['roles'];
+
+  db_query("UPDATE {". content_instance_tablename() ."} SET widget_settings = '%s'
+    WHERE type_name = '%s' AND field_name = '%s'", serialize($widget_settings), $form_state['values']['type_name'], $form_state['values']['field_name']); 
+  content_clear_type_cache();
+}
+
+/** 
+ * Helper function, that returns the values of the widget settings
+ *
+ * @param $type_name name of content_type
+ * @param $field_name name of the field
+ * @param $value name of the setting (exempt roles)
+ */
+function _cck_required_by_role_get_default_value($type_name, $field_name, $value) {
+  $field = content_fields($field_name, $type_name);
+  if (isset($field['widget'][$value])) {
+    return $field['widget'][$value];
+  }
+  return user_roles(FALSE);
+}

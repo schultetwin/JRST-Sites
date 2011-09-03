@@ -1,0 +1,12 @@
+﻿; $Id: cck_required_by_role.info,v 1.1 2009/08/11 16:26:30 jdwfly Exp $
+name = CCK Required by Role
+description = Allows user to set fields to be required based on role.
+dependencies[] = content
+package = CCK
+core = 6.x
+; Information added by drupal.org packaging script on 2009-08-18
+version = "6.x-1.0"
+core = "6.x"
+project = "cck_required_by_role"
+datestamp = "1250635825"
+

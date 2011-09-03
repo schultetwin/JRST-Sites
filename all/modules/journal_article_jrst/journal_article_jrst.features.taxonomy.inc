@@ -17,8 +17,8 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'module' => 'features_concept_area',
       'weight' => '0',
       'nodes' => array(
-        'group' => 'group',
         'article' => 'article',
+        'group' => 'group',
       ),
     ),
     'grade_level' => array(
@@ -49,8 +49,8 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'module' => 'features_methodology',
       'weight' => '0',
       'nodes' => array(
-        'group' => 'group',
         'article' => 'article',
+        'group' => 'group',
       ),
     ),
     'science_topic' => array(
@@ -65,8 +65,8 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'module' => 'features_science_topic',
       'weight' => '0',
       'nodes' => array(
-        'group' => 'group',
         'article' => 'article',
+        'group' => 'group',
       ),
     ),
   );

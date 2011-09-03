@@ -42,7 +42,7 @@ function jrst_author_content_default_fields() {
     ),
     'widget_active' => '1',
     'type' => 'nodereference',
-    'required' => '0',
+    'required' => '1',
     'multiple' => '0',
     'module' => 'nodereference',
     'active' => '1',
@@ -79,6 +79,16 @@ function jrst_author_content_default_fields() {
       'description' => 'Select article to reference',
       'type' => 'nodereference_url',
       'module' => 'nodereference_url',
+      'roles' => array(
+        '6' => 6,
+        '7' => 7,
+        '5' => 5,
+        '1' => 0,
+        '2' => 0,
+        '3' => 0,
+        '4' => 0,
+        '8' => 0,
+      ),
     ),
   );
 

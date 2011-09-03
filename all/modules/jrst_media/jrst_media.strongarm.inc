@@ -512,5 +512,14 @@ function jrst_media_strongarm() {
   );
 
   $export['views_block_hashes'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'workflow_podcast';
+  $strongarm->value = array(
+    0 => 'node',
+  );
+
+  $export['workflow_podcast'] = $strongarm;
   return $export;
 }
