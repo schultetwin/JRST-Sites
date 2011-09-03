@@ -29,3 +29,12 @@ function jrst_author_node_info() {
   );
   return $items;
 }
+
+/**
+ * Implementation of hook_views_api().
+ */
+function jrst_author_views_api() {
+  return array(
+    'api' => '2',
+  );
+}

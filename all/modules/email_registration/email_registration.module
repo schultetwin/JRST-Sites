@@ -20,7 +20,6 @@ function email_registration_user($op, &$edit, &$account, $category = NULL) {
       $names = module_invoke_all('email_registration_name', $edit, $account);
       // Remove any empty entries
       $names = array_filter($names);
-      dsm($names);
 
       if (empty($names)) {
         // Default implementation of name generation

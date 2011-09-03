@@ -168,7 +168,7 @@ function jrst_author_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'unique_field_comp_podcast';
-  $strongarm->value = 'all';
+  $strongarm->value = 'each';
 
   $export['unique_field_comp_podcast'] = $strongarm;
   $strongarm = new stdClass;
@@ -176,8 +176,7 @@ function jrst_author_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'unique_field_fields_podcast';
   $strongarm->value = array(
-    0 => 'name',
-    1 => 'field_podcast_podcast',
+    0 => 'field_podcast_podcast',
   );
 
   $export['unique_field_fields_podcast'] = $strongarm;

@@ -62,7 +62,7 @@ function jrst_author_content_default_fields() {
       'field' => 0,
       'node_type' => 0,
     ),
-    'advanced_view' => '--',
+    'advanced_view' => 'article_podcast_reference',
     'advanced_view_args' => '',
     'widget' => array(
       'node_link' => array(
@@ -125,6 +125,8 @@ function jrst_author_content_default_fields() {
     'list_field' => '0',
     'list_default' => 1,
     'description_field' => '0',
+    'filefield_private_downloads' => '',
+    'filefield_private_content_disposition' => '',
     'widget' => array(
       'file_extensions' => 'mp4 mpeg avi mpg wmv flv mov',
       'file_path' => 'videos/podcast/[user]',
