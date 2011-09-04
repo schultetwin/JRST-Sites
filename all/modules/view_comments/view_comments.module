@@ -1,0 +1,29 @@
+<?php
+// $Id$ 
+
+/**
+ * @file 
+ */
+
+/**
+ * Implementation of hook_perm().
+ */
+function view_comments_perm() {
+  foreach (node_get_types('names') as $type => $name) {
+    $perm[] = 'view comments for: ' . $type;
+  }
+  return $perm;
+}
+
+/**
+ * Implementation of hook_nodeapi().
+ */
+function view_comments_preprocess_comment(&$variables, $hook) {
+  global $user;
+  if (!user_access('view comments for: ' . $variables['node']->type)) {
+    foreach ($variables as $key => $value) {
+      unset($variables[$key]);
+    }
+  }
+
+}

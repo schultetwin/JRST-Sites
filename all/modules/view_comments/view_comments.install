@@ -1,0 +1,20 @@
+<?php
+// $Id$ 
+
+/**
+ * @file 
+ */
+
+/**
+ * Implementation of hook_install() 
+ */
+function view_comments_install() {
+
+}
+
+/**
+ * Implementation of hook_uninstall() 
+ */
+function view_comments_uninstall() {
+
+}

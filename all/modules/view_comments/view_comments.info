@@ -1,0 +1,7 @@
+; $Id$ 
+name = View Comments
+description = Provides permissions to view permission by content type
+package = 
+version = 
+core = 
+php = 
