@@ -334,6 +334,14 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: view comments for: article
+  $permissions['view comments for: article'] = array(
+    'name' => 'view comments for: article',
+    'roles' => array(
+      '0' => 'authenticated user',
+    ),
+  );
+
   // Exported permission: view field_article_assoc_editor
   $permissions['view field_article_assoc_editor'] = array(
     'name' => 'view field_article_assoc_editor',

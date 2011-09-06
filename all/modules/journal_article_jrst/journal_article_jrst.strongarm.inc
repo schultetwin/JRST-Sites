@@ -431,6 +431,36 @@ function journal_article_jrst_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'unique_field_comp_article';
+  $strongarm->value = 'each';
+
+  $export['unique_field_comp_article'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'unique_field_fields_article';
+  $strongarm->value = array(
+    0 => 'field_article_wiley_id',
+  );
+
+  $export['unique_field_fields_article'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'unique_field_scope_article';
+  $strongarm->value = 'type';
+
+  $export['unique_field_scope_article'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'unique_field_show_matches_article';
+  $strongarm->value = array();
+
+  $export['unique_field_show_matches_article'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'upload_article';
   $strongarm->value = '0';
 
