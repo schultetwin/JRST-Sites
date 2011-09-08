@@ -553,6 +553,12 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: view field_issue_special
+  $permissions['view field_issue_special'] = array(
+    'name' => 'view field_issue_special',
+    'roles' => array(),
+  );
+
   // Exported permission: view field_issue_volume
   $permissions['view field_issue_volume'] = array(
     'name' => 'view field_issue_volume',

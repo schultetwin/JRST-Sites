@@ -17,8 +17,8 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'module' => 'features_concept_area',
       'weight' => '0',
       'nodes' => array(
-        'article' => 'article',
         'group' => 'group',
+        'article' => 'article',
       ),
     ),
     'grade_level' => array(
@@ -42,7 +42,7 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'description' => '',
       'help' => '',
       'relations' => '1',
-      'hierarchy' => '1',
+      'hierarchy' => '0',
       'multiple' => '1',
       'required' => '0',
       'tags' => '0',

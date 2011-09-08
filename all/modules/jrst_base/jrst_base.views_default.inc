@@ -403,6 +403,34 @@ else {
       ),
     ),
   ));
+  $handler->override_option('filters', array(
+    'type' => array(
+      'operator' => 'in',
+      'value' => array(
+        'discussion' => 'discussion',
+        'document' => 'document',
+        'event' => 'event',
+        'wiki' => 'wiki',
+        'article' => 'article',
+        'issue' => 'issue',
+        'podcast' => 'podcast',
+        'group' => 'group',
+      ),
+      'group' => '0',
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'id' => 'type',
+      'table' => 'node',
+      'field' => 'type',
+      'override' => array(
+        'button' => 'Override',
+      ),
+      'relationship' => 'none',
+    ),
+  ));
   $handler->override_option('access', array(
     'type' => 'none',
   ));

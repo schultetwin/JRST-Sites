@@ -74,11 +74,6 @@ function jrst_author_content_default_fields() {
       ),
       'fallback' => 'select',
       'edit_fallback' => 0,
-      'label' => 'Article',
-      'weight' => '-4',
-      'description' => 'Select article to reference',
-      'type' => 'nodereference_url',
-      'module' => 'nodereference_url',
       'roles' => array(
         '6' => 6,
         '7' => 7,
@@ -89,6 +84,11 @@ function jrst_author_content_default_fields() {
         '4' => 0,
         '8' => 0,
       ),
+      'label' => 'Article',
+      'weight' => '-4',
+      'description' => 'Select article to reference',
+      'type' => 'nodereference_url',
+      'module' => 'nodereference_url',
     ),
   );
 

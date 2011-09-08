@@ -1,6 +1,7 @@
 core = "6.x"
 dependencies[] = "cck_required_by_role"
 dependencies[] = "features"
+dependencies[] = "journal_article_jrst"
 dependencies[] = "nodereference_url"
 dependencies[] = "strongarm"
 dependencies[] = "unique_field"

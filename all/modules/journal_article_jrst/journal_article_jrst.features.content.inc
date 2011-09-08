@@ -183,69 +183,6 @@ function journal_article_jrst_content_default_fields() {
     'multiple' => '0',
     'module' => 'computed_field',
     'active' => '1',
-    'code' => '$checklist=4;
-$edreview=14;
-$review=30;
-$ae=18;
-$editor=18;
-$randr=126;
-$major=63;
-$minor=32;
-$production=100;
-
-$year = substr($node->field_article_decision_date[0][\'value\'],0,4);
-$month = substr($node->field_article_decision_date[0][\'value\'],5,2);
-$day = substr($node->field_article_decision_date[0][\'value\'],8,2);
-
-switch ($node->field_article_decision[0][\'value\']) {
-case "Revise and Resubmit":
-   $day+=$randr+$checklist+$review+$ae+$editor;
-case "Major Revision":
-   $day+=$major+$checklist+$ae+$editor;
-case "Minor Revision":
-   $day+=$minor+$checklist+$editor;
-case "Accept":
-   $day+=$production;
-   break;
-case "Special Accept":
-   $day+=$production;
-   break;
-}
-
-if (substr($node->field_article_status[0][\'value\'],0,6) == "Review" ) {
-   $year=substr($node->field_article_submitted[0][\'value\'],0,4);
-   $month=substr($node->field_article_submitted[0][\'value\'],5,2);
-   $day=substr($node->field_article_submitted[0][\'value\'],8,2) + $minor +  $editor + $production;
-   if (substr($node->field_article_status[0][\'value\'],7,15) == \'Revision\') {
-      $day+=$review+$ae+$editor+$major+$checklist+$ae+$editor;
-      }
-   if (substr($node->field_article_status[0][\'value\'],7,19) == \'Resubmission\') {
-      $day+=$review+$ae+$editor+$randr+$checklist;
-      }
-}
-
-if ($node->field_article_status == \'Production\') {
-$day+=$production;
-}
-
-$datenew=mktime(0,0,0,$month,$day,$year);
-$result=date("Y-m-d",$datenew)."T00:00:00";
-$output=date("F Y",$datenew);
-
-If ($node->field_article_status[0][\'value\'] == "Editorial Review") {
-   $output=\'\';
-   $result=\'\';
-}
-
-$node->field_ms_date_avail[0][\'value\'] = $result;
-$node_field[0][\'value\'] = $output;',
-    'display_format' => '$display = $node_field_item[\'value\'];',
-    'store' => 1,
-    'data_type' => 'varchar',
-    'data_length' => '20',
-    'data_not_NULL' => 0,
-    'data_default' => '',
-    'data_sortable' => 1,
     'widget' => array(
       'default_value' => NULL,
       'default_value_php' => NULL,

@@ -508,7 +508,8 @@ function jrst_media_strongarm() {
     '527d55149807f4938ae8e394bc5a1aba' => 'group_block_poll_latest_comments-block_1',
     'ff980fe8675569132670cd0a2b5be358' => 'group_block_polls_latest-block_1',
     '157e77ff7551b8ace96fdd6c04d716cf' => 'group_block_wiki_latest_comments-block_1',
-    '24dcb59a56254e5a470ee2f23590eed2' => 'group_block_latest_content-block_1',
+    'd417dc26ef4f00703cd929d70152344e' => 'author_related_resources-block_1',
+    'bfa85ba52095ab45032ff9964a23dc85' => 'author_related_resources-block_2',
   );
 
   $export['views_block_hashes'] = $strongarm;

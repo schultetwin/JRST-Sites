@@ -208,13 +208,14 @@ function journal_article_jrst_strongarm() {
   $strongarm->value = array(
     'title' => '13',
     'body_field' => '18',
-    'revision_information' => '34',
-    'author' => '32',
-    'options' => '35',
-    'comment_settings' => '37',
-    'menu' => '33',
+    'revision_information' => '35',
+    'author' => '33',
+    'options' => '36',
+    'comment_settings' => '38',
+    'menu' => '34',
     'taxonomy' => '16',
-    'path' => '36',
+    'path' => '37',
+    'workflow' => '10',
   );
 
   $export['content_extra_weights_article'] = $strongarm;
