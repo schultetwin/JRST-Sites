@@ -1,0 +1,221 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the Mailhandler module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function mailhandler_install() {
+  drupal_install_schema('mailhandler');
+}
+
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function mailhandler_uninstall() {
+  drupal_uninstall_schema('mailhandler');
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function mailhandler_schema() {
+  $schema['mailhandler_mailbox'] = array(
+    'description' => 'Table storing mailbox definitions',
+    'fields' => array(
+      'mail' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Unique email address of this mailbox. Used to identify it programmatically.',
+      ),
+      'mid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary ID field for the table. Not used for anything except internal lookups.',
+        'no export' => TRUE, // Do not export database-only keys.
+      ),
+      'settings' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'Configuration of mailhandler mailbox.',
+      ),
+    ),
+    'primary key' => array('mid'),
+    'unique keys' => array('mail' => array('mail'), ),
+    'export' => array(
+      'key' => 'mail',
+      'key name' => 'Email address',
+      'primary key' => 'mid',
+      'identifier' => 'mailbox',
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Update database hooks
+ */
+
+function mailhandler_update_6001() {
+  $ret = array();
+  db_add_field($ret, 'mailhandler', 'authentication', array(
+    'type' => 'varchar',
+    'not null' => TRUE,
+    'length' => '255',
+    'default' => 'mailhandler_default',
+  ));
+  return $ret;
+}
+
+function mailhandler_update_6200() {
+  $ret = array();
+  if (!module_exists('ctools') || !module_exists('feeds')) {
+    module_disable(array('mailhandler'));
+    return array('#abort' => array('success' => FALSE, 'query' => 'Mailhandler is missing one or more dependencies and has been disabled. Please enable all dependencies, re-enable Mailhandler, and re-run update.php again.'));
+  }
+  drupal_install_schema('mailhandler');
+  $result = db_query('SELECT * FROM {mailhandler}');
+  // Port each existing mailbox to the new format
+  while ($row = db_fetch_object($result)) {
+    // First, build and create the new mailbox
+    $mailhandler_mailbox = array(
+      'mail' => $row->mail,
+      'settings' => array(
+        'mailto' => $row->mailto,
+        'folder' => $row->folder,
+        'imap' => $row->imap,
+        'domain' => $row->domain,
+        'port' => $row->port,
+        'name' => $row->name,
+        'pass' => $row->pass,
+        'extraimap' => $row->extraimap,
+        'limit' => variable_get('mailhandler_max_retrieval', 0),
+        'encoding' => variable_get('mailhandler_default_encoding', 'UTF-8'),
+        'mime' => $row->mime,
+        'delete_after_read' => $row->delete_after_read,
+        'fromheader' => $row->fromheader,
+        'security' => $row->security,
+        'replies' => $row->replies,
+      ),
+    );
+    drupal_write_record('mailhandler_mailbox', $mailhandler_mailbox);
+    db_drop_table($ret, 'mailhandler');
+    // Build a new import format, if necessary
+    $format = $row->format;
+    if (!empty($row->sigseparator)) {
+      // Copy $format and add on the sig separator input filter
+      $new_format = filter_format_load($format);
+      $filters = filter_list_format($format);
+      $new_format->name = $new_format->name . ' (' . $row->mail . ')';
+      drupal_write_record('filter_formats', $new_format);
+      $format = $new_format->format;
+      $filters[] = (object)array(
+        'module' => 'mailhandler',
+        'delta' => 0,
+        'weight' => 0,
+      );
+      foreach ($filters as $filter) {
+        $new_filter = array(
+          'format' => $format,
+          'module' => $filter->module,
+          'delta' => $filter->delta,
+          'weight' => $filter->weight,
+          );
+        drupal_write_record('filters', $new_filter);
+      }
+      variable_set("mailhandler_filter_$format", $row->sigseparator);
+    }
+    // Now build a corresponding feeds importer with matching commands and filter setting
+    module_load_include('inc', 'mailhandler_default', 'mailhandler_default.feeds_importer_default');
+    $export = mailhandler_default_feeds_importer_default();
+    $config = $export['mailhandler_nodes']->config;
+    $config['name'] = $row->mail . ' nodes';
+    $config['parser']['config']['default_commands'] = $row->commands;
+    $config['processor']['config']['input_format'] = $format;
+    $importer = array(
+      'id' => $row->mail . '_nodes',
+      'config' => $config,
+    );
+    drupal_write_record('feeds_importer', $importer);
+  }
+  drupal_set_message('Any existing Mailhandler mailboxes have been converted and corresponding input formats and Feeds importers have been created.');
+  return $ret;
+}
+
+/**
+ * Make 'mail' field strictly alphanumeric, to work with Features
+ * http://drupal.org/node/906686
+ */
+function mailhandler_update_6201() {
+  $ret = array();
+  $result = db_query('SELECT * FROM {mailhandler_mailbox}');
+  // For each mailbox, convert mail to alphanumeric, and move existing value into settings
+  while ($row = db_fetch_array($result)) {
+    $row['settings'] = unserialize($row['settings']);
+    $row['settings']['mail'] = $row['mail'];
+    $row['mail'] = mailhandler_alphanumeric($row['mail']);
+    drupal_write_record('mailhandler_mailbox', $row, 'mid');
+  }
+  $result = db_query('SELECT * FROM {feeds_source}');
+  // For existing feed sources, need to convert selected mailboxes to alphanumeric
+  while ($row = db_fetch_array($result)) {
+    $row['config'] = unserialize($row['config']);
+    if (isset($row['config']['MailhandlerFetcher']['mailbox'])) {
+      $row['config']['MailhandlerFetcher']['mailbox'] = mailhandler_alphanumeric($row['config']['MailhandlerFetcher']['mailbox']);
+      drupal_write_record('feeds_source', $row, 'id');
+    }
+  }
+  return $ret;
+}
+
+/**
+ * Add MailhandlerCommandsFiles and MailhandlerCommandsHeaders to existing
+ * Feeds importers.
+ * http://drupal.org/node/1147414
+ */
+function mailhandler_update_6202() {
+  $ret = array();
+  $result = db_query('SELECT * FROM {feeds_importer}');
+  while ($row = db_fetch_array($result)) {
+    $row['config'] = unserialize($row['config']);
+    if ($row['config']['parser']['plugin_key'] == 'MailhandlerParser') {
+      $old_plugins = $row['config']['parser']['config']['command_plugin'];
+      $new_plugins = array(
+        'MailhandlerCommandsFiles' => 'MailhandlerCommandsFiles',
+        'MailhandlerCommandsHeaders' => 'MailhandlerCommandsHeaders',
+      );
+      $row['config']['parser']['config']['command_plugin'] = array_merge($old_plugins, $new_plugins);
+      drupal_write_record('feeds_importer', $row, 'id');
+    }
+  }
+  return $ret;
+}
+
+/**
+ * Check that the IMAP extension exists for PHP.
+ */
+function mailhandler_requirements($phase) {
+  // Ensure translations don't break at install time
+  $t = get_t();
+  $has_imap = function_exists('imap_open');
+
+  $requirements['mailhandler'] = array(
+    'title' => $t('IMAP'),
+    'description' => $t("Mailhandler requires that PHP's !ext is enabled in order to function properly.", array('!ext' => l('IMAP extension', 'http://www.php.net/imap'))),
+    'value' => $has_imap ? $t('Enabled') : $t('Not found'),
+    'severity' => $has_imap ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+  );
+  return $requirements;
+}
+
+function mailhandler_alphanumeric($mail) {
+  $mail = drupal_strtolower(trim($mail));
+  $mail = preg_replace('/[^a-z0-9-]/', '_', $mail);
+  $mail = preg_replace('/-+/', "_", $mail);
+  return $mail;
+}

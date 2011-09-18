@@ -11,13 +11,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_assoc_editor',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '40',
+      'parent' => 'group_article_editor',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -69,7 +70,7 @@ function journal_article_jrst_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Associate Editor',
-      'weight' => '26',
+      'weight' => '40',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
@@ -81,13 +82,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_author',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '41',
+      'parent' => 'group_article_publish',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -136,7 +138,7 @@ function journal_article_jrst_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Author',
-      'weight' => '19',
+      'weight' => '41',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
@@ -148,13 +150,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_available_date',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '41',
+      'parent' => 'group_article_editor',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -183,11 +186,74 @@ function journal_article_jrst_content_default_fields() {
     'multiple' => '0',
     'module' => 'computed_field',
     'active' => '1',
+    'code' => '$checklist=4;
+$edreview=14;
+$review=30;
+$ae=18;
+$editor=18;
+$randr=126;
+$major=63;
+$minor=32;
+$production=100;
+
+$year = substr($node->field_article_decision_date[0][\'value\'],0,4);
+$month = substr($node->field_article_decision_date[0][\'value\'],5,2);
+$day = substr($node->field_article_decision_date[0][\'value\'],8,2);
+
+switch ($node->field_article_decision[0][\'value\']) {
+case "Revise and Resubmit":
+   $day+=$randr+$checklist+$review+$ae+$editor;
+case "Major Revision":
+   $day+=$major+$checklist+$ae+$editor;
+case "Minor Revision":
+   $day+=$minor+$checklist+$editor;
+case "Accept":
+   $day+=$production;
+   break;
+case "Special Accept":
+   $day+=$production;
+   break;
+}
+
+if (substr($node->field_article_status[0][\'value\'],0,6) == "Review" ) {
+   $year=substr($node->field_article_submitted[0][\'value\'],0,4);
+   $month=substr($node->field_article_submitted[0][\'value\'],5,2);
+   $day=substr($node->field_article_submitted[0][\'value\'],8,2) + $minor +  $editor + $production;
+   if (substr($node->field_article_status[0][\'value\'],7,15) == \'Revision\') {
+      $day+=$review+$ae+$editor+$major+$checklist+$ae+$editor;
+      }
+   if (substr($node->field_article_status[0][\'value\'],7,19) == \'Resubmission\') {
+      $day+=$review+$ae+$editor+$randr+$checklist;
+      }
+}
+
+if ($node->field_article_status == \'Production\') {
+$day+=$production;
+}
+
+$datenew=mktime(0,0,0,$month,$day,$year);
+$result=date("Y-m-d",$datenew)."T00:00:00";
+$output=date("F Y",$datenew);
+
+If ($node->field_article_status[0][\'value\'] == "Editorial Review") {
+   $output=\'\';
+   $result=\'\';
+}
+
+$node->field_ms_date_avail[0][\'value\'] = $result;
+$node_field[0][\'value\'] = $output;',
+    'display_format' => '$display = $node_field_item[\'value\'];',
+    'store' => 1,
+    'data_type' => 'varchar',
+    'data_length' => '20',
+    'data_not_NULL' => 0,
+    'data_default' => '',
+    'data_sortable' => 1,
     'widget' => array(
       'default_value' => NULL,
       'default_value_php' => NULL,
       'label' => 'Available Date',
-      'weight' => '31',
+      'weight' => '41',
       'description' => '',
       'type' => 'computed',
       'module' => 'computed_field',
@@ -199,13 +265,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_coauthor',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '42',
+      'parent' => 'group_article_publish',
       'label' => array(
         'format' => 'above',
-        'exclude' => 0,
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -255,7 +322,7 @@ function journal_article_jrst_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Co-Authors',
-      'weight' => '20',
+      'weight' => '42',
       'description' => '',
       'type' => 'userreference_autocomplete',
       'module' => 'userreference',
@@ -267,13 +334,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_country',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '19',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -317,7 +385,7 @@ function journal_article_jrst_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Country',
-      'weight' => '15',
+      'weight' => '19',
       'description' => '',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -329,13 +397,14 @@ function journal_article_jrst_content_default_fields() {
     'field_name' => 'field_article_decision',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '30',
+      'parent' => 'group_article_status',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -396,13 +465,14 @@ Accept
     'field_name' => 'field_article_decision_date',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '33',
+      'parent' => 'group_article_status',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -454,7 +524,7 @@ Accept
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'Decision Date',
-      'weight' => '24',
+      'weight' => '33',
       'description' => '',
       'type' => 'date_popup',
       'module' => 'date',
@@ -466,13 +536,14 @@ Accept
     'field_name' => 'field_article_editor',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '38',
+      'parent' => 'group_article_editor',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -524,7 +595,7 @@ Accept
       ),
       'default_value_php' => NULL,
       'label' => 'Editor',
-      'weight' => '25',
+      'weight' => '38',
       'description' => '',
       'type' => 'userreference_select',
       'module' => 'userreference',
@@ -536,13 +607,14 @@ Accept
     'field_name' => 'field_article_editor_projection',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '39',
+      'parent' => 'group_article_editor',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -586,7 +658,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Editor\'s Projection',
-      'weight' => '28',
+      'weight' => '39',
       'description' => '',
       'type' => 'optionwidgets_select',
       'module' => 'optionwidgets',
@@ -598,9 +670,10 @@ Not for JRST',
     'field_name' => 'field_article_issue',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '40',
+      'parent' => 'group_article_publish',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
@@ -658,7 +731,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Issue',
-      'weight' => '17',
+      'weight' => '40',
       'description' => 'Select the issue in which this article was published.',
       'type' => 'nodereference_select',
       'module' => 'nodereference',
@@ -670,9 +743,10 @@ Not for JRST',
     'field_name' => 'field_article_preprod_author',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '18',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
@@ -720,7 +794,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Author',
-      'weight' => '14',
+      'weight' => '18',
       'description' => 'Field for author name before the article is put into production. After it is put into production, we will create an user account for the author, and use a node reference.',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -732,13 +806,14 @@ Not for JRST',
     'field_name' => 'field_article_previous_article',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '13',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -794,10 +869,81 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Previous Submission',
-      'weight' => '27',
+      'weight' => '13',
       'description' => 'If the node has had a major revision or has been resubmitted, this field will reference the old manuscript.',
       'type' => 'nodereference_autocomplete',
       'module' => 'nodereference',
+    ),
+  );
+
+  // Exported field: field_article_resubmit
+  $fields['article-field_article_resubmit'] = array(
+    'field_name' => 'field_article_resubmit',
+    'type_name' => 'article',
+    'display_settings' => array(
+      'weight' => '31',
+      'parent' => 'group_article_status',
+      'label' => array(
+        'format' => 'inline',
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 1,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|No
+1|Resubmit',
+    'allowed_values_php' => '',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => 0,
+        ),
+      ),
+      'default_value_php' => NULL,
+      'roles' => array(
+        '1' => 0,
+        '2' => 0,
+        '6' => 0,
+        '3' => 0,
+        '4' => 0,
+        '7' => 0,
+        '8' => 0,
+        '5' => 0,
+      ),
+      'label' => 'Resubmit',
+      'weight' => '31',
+      'description' => 'Specifies that this article is a resubmit',
+      'type' => 'optionwidgets_onoff',
+      'module' => 'optionwidgets',
     ),
   );
 
@@ -806,9 +952,10 @@ Not for JRST',
     'field_name' => 'field_article_scholarone_id',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '12',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
@@ -856,7 +1003,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'ScholarOne ID',
-      'weight' => '11',
+      'weight' => '12',
       'description' => 'Enter MS tracking number from ScholarOne',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -868,13 +1015,14 @@ Not for JRST',
     'field_name' => 'field_article_special_issue',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '15',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -916,7 +1064,7 @@ Not for JRST',
       ),
       'default_value_php' => NULL,
       'label' => 'Special Issue',
-      'weight' => '21',
+      'weight' => '15',
       'description' => '',
       'type' => 'optionwidgets_onoff',
       'module' => 'optionwidgets',
@@ -928,13 +1076,14 @@ Not for JRST',
     'field_name' => 'field_article_status',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '32',
+      'parent' => 'group_article_status',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -965,7 +1114,8 @@ Not for JRST',
     'active' => '1',
     'text_processing' => '0',
     'max_length' => '',
-    'allowed_values' => 'Editorial Review
+    'allowed_values' => 'Withdrawn
+Editorial Review
 Review
 Review Revision
 Review Resubmission
@@ -978,8 +1128,18 @@ Production',
         ),
       ),
       'default_value_php' => NULL,
+      'roles' => array(
+        '1' => 0,
+        '2' => 0,
+        '6' => 0,
+        '3' => 0,
+        '4' => 0,
+        '7' => 0,
+        '8' => 0,
+        '5' => 0,
+      ),
       'label' => 'Status',
-      'weight' => '23',
+      'weight' => '32',
       'description' => '',
       'type' => 'optionwidgets_select',
       'module' => 'optionwidgets',
@@ -991,13 +1151,14 @@ Production',
     'field_name' => 'field_article_submitted_date',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '17',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -1049,7 +1210,7 @@ Production',
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'Date Submitted',
-      'weight' => '22',
+      'weight' => '17',
       'description' => '',
       'type' => 'date_popup',
       'module' => 'date',
@@ -1061,9 +1222,10 @@ Production',
     'field_name' => 'field_article_type',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '16',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
@@ -1111,7 +1273,7 @@ Production',
       ),
       'default_value_php' => NULL,
       'label' => 'Type',
-      'weight' => '29',
+      'weight' => '16',
       'description' => '',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -1123,13 +1285,14 @@ Production',
     'field_name' => 'field_article_wiley_id',
     'type_name' => 'article',
     'display_settings' => array(
+      'weight' => '14',
+      'parent' => 'group_article_basic',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
-        'exclude' => 0,
+        'exclude' => 1,
       ),
       'full' => array(
         'format' => 'default',
@@ -1173,7 +1336,7 @@ Production',
       ),
       'default_value_php' => NULL,
       'label' => 'Wiley Id',
-      'weight' => '12',
+      'weight' => '14',
       'description' => '',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -1536,6 +1699,7 @@ Production',
   t('Issue');
   t('Previous Submission');
   t('Publication date');
+  t('Resubmit');
   t('ScholarOne ID');
   t('Special Issue');
   t('Status');

@@ -53,6 +53,12 @@ function jrst_media_user_default_permissions() {
     ),
   );
 
+  // Exported permission: edit field_document_article
+  $permissions['edit field_document_article'] = array(
+    'name' => 'edit field_document_article',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_podcast_article
   $permissions['edit field_podcast_article'] = array(
     'name' => 'edit field_podcast_article',
@@ -89,6 +95,12 @@ function jrst_media_user_default_permissions() {
   // Exported permission: use default thumb
   $permissions['use default thumb'] = array(
     'name' => 'use default thumb',
+    'roles' => array(),
+  );
+
+  // Exported permission: view field_document_article
+  $permissions['view field_document_article'] = array(
+    'name' => 'view field_document_article',
     'roles' => array(),
   );
 

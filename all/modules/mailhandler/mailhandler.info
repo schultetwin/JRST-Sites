@@ -1,0 +1,13 @@
+name = Mailhandler
+description = Accepts submissions via e-mail.
+core = 6.x
+dependencies[] = "ctools"
+dependencies[] = "feeds"
+package = "Mailhandler"
+
+; Information added by drupal.org packaging script on 2011-09-12
+version = "6.x-2.x-dev"
+core = "6.x"
+project = "mailhandler"
+datestamp = "1315786545"
+

@@ -6,6 +6,12 @@
 function journal_article_jrst_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: clear mail_impor feeds
+  $permissions['clear mail_impor feeds'] = array(
+    'name' => 'clear mail_impor feeds',
+    'roles' => array(),
+  );
+
   // Exported permission: create article content
   $permissions['create article content'] = array(
     'name' => 'create article content',
@@ -196,6 +202,12 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: edit field_article_resubmit
+  $permissions['edit field_article_resubmit'] = array(
+    'name' => 'edit field_article_resubmit',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_article_scholarone_id
   $permissions['edit field_article_scholarone_id'] = array(
     'name' => 'edit field_article_scholarone_id',
@@ -334,6 +346,12 @@ function journal_article_jrst_user_default_permissions() {
     ),
   );
 
+  // Exported permission: import mail_impor feeds
+  $permissions['import mail_impor feeds'] = array(
+    'name' => 'import mail_impor feeds',
+    'roles' => array(),
+  );
+
   // Exported permission: view comments for: article
   $permissions['view comments for: article'] = array(
     'name' => 'view comments for: article',
@@ -461,6 +479,12 @@ function journal_article_jrst_user_default_permissions() {
       '1' => 'editor',
       '2' => 'site admin',
     ),
+  );
+
+  // Exported permission: view field_article_resubmit
+  $permissions['view field_article_resubmit'] = array(
+    'name' => 'view field_article_resubmit',
+    'roles' => array(),
   );
 
   // Exported permission: view field_article_scholarone_id

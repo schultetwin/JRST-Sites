@@ -1,0 +1,23 @@
+Mailhandler 6.x-2.x, 2011-09-11
+-------------------------------
+#1260106 by jeffvanh, Dane Powell: Added option to ignore failed authentication.
+#1191722 by Dane Powell: Added cc and bcc addresses as mapping sources.
+#1265818 by narayanis, Dane Powell: Added weights to parser plugins.
+
+Mailhandler 6.x-2.0-beta2, 2011-08-29
+-------------------------------------
+Removed mailto (second email address) option, as it was not actually used anywhere.
+#1258788 by Dane Powell: Fixed errors related to empty POP mailboxes (again).
+Fixed loading of filters_plugin.
+Changed watchdog severity level for an empty mailbox from error to info
+#1258788 by Dane Powell: Fixed errors related to empty POP mailboxes.
+#1159580 by Dane Powell: Improved mailbox connection test to be more informative.
+#1208028 by Dane Powell: Fixed failed authentications not being reported
+#494002 by Dane Powell: Fixed signature separator filter to be more conservative
+
+Mailhandler 6.x-2.0-beta1, 2011-05-18
+-------------------------------------
+#1146426 by Dane Powell: Removed validation of mailbox names as email addresses
+#1150362 by Dane Powell: Fixed taxonomy handling
+#1158384 by Dane Powell: Cleaned up code (Coder review and documentation)
+Added CHANGELOG.txt

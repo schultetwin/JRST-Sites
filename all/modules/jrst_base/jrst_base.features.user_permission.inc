@@ -12,9 +12,45 @@ function jrst_base_user_default_permissions() {
     'roles' => array(),
   );
 
+  // Exported permission: access devel information
+  $permissions['access devel information'] = array(
+    'name' => 'access devel information',
+    'roles' => array(),
+  );
+
+  // Exported permission: access site-wide contact form
+  $permissions['access site-wide contact form'] = array(
+    'name' => 'access site-wide contact form',
+    'roles' => array(),
+  );
+
   // Exported permission: access workflow summary views
   $permissions['access workflow summary views'] = array(
     'name' => 'access workflow summary views',
+    'roles' => array(),
+  );
+
+  // Exported permission: administer chart
+  $permissions['administer chart'] = array(
+    'name' => 'administer chart',
+    'roles' => array(),
+  );
+
+  // Exported permission: administer feeds
+  $permissions['administer feeds'] = array(
+    'name' => 'administer feeds',
+    'roles' => array(),
+  );
+
+  // Exported permission: administer feeds_tamper
+  $permissions['administer feeds_tamper'] = array(
+    'name' => 'administer feeds_tamper',
+    'roles' => array(),
+  );
+
+  // Exported permission: administer mailhandler
+  $permissions['administer mailhandler'] = array(
+    'name' => 'administer mailhandler',
     'roles' => array(),
   );
 
@@ -42,9 +78,21 @@ function jrst_base_user_default_permissions() {
     'roles' => array(),
   );
 
+  // Exported permission: display source code
+  $permissions['display source code'] = array(
+    'name' => 'display source code',
+    'roles' => array(),
+  );
+
   // Exported permission: edit field_poll_body
   $permissions['edit field_poll_body'] = array(
     'name' => 'edit field_poll_body',
+    'roles' => array(),
+  );
+
+  // Exported permission: execute php code
+  $permissions['execute php code'] = array(
+    'name' => 'execute php code',
     'roles' => array(),
   );
 
@@ -66,15 +114,21 @@ function jrst_base_user_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported permission: unblock expired accounts
-  $permissions['unblock expired accounts'] = array(
-    'name' => 'unblock expired accounts',
+  // Exported permission: switch users
+  $permissions['switch users'] = array(
+    'name' => 'switch users',
     'roles' => array(),
   );
 
-  // Exported permission: upload files
-  $permissions['upload files'] = array(
-    'name' => 'upload files',
+  // Exported permission: tamper mail_impor
+  $permissions['tamper mail_impor'] = array(
+    'name' => 'tamper mail_impor',
+    'roles' => array(),
+  );
+
+  // Exported permission: unblock expired accounts
+  $permissions['unblock expired accounts'] = array(
+    'name' => 'unblock expired accounts',
     'roles' => array(),
   );
 
@@ -93,6 +147,12 @@ function jrst_base_user_default_permissions() {
   // Exported permission: use default thumbnail
   $permissions['use default thumbnail'] = array(
     'name' => 'use default thumbnail',
+    'roles' => array(),
+  );
+
+  // Exported permission: use realname
+  $permissions['use realname'] = array(
+    'name' => 'use realname',
     'roles' => array(),
   );
 
@@ -123,12 +183,6 @@ function jrst_base_user_default_permissions() {
   // Exported permission: view imagecache group_images_medium
   $permissions['view imagecache group_images_medium'] = array(
     'name' => 'view imagecache group_images_medium',
-    'roles' => array(),
-  );
-
-  // Exported permission: view uploaded files
-  $permissions['view uploaded files'] = array(
-    'name' => 'view uploaded files',
     'roles' => array(),
   );
 

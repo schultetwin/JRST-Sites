@@ -83,13 +83,16 @@ function jrst_base_views_default_views() {
   $handler->override_option('sorts', array(
     'last_updated' => array(
       'exposed' => FALSE,
-      'order' => 'ASC',
+      'order' => 'DESC',
       'identifier' => 'unsorted',
       'granularity' => 'second',
       'id' => 'last_updated',
       'table' => 'node_comment_statistics',
       'field' => 'last_updated',
       'relationship' => 'none',
+      'override' => array(
+        'button' => 'Override',
+      ),
     ),
   ));
   $handler->override_option('filters', array(
@@ -271,19 +274,19 @@ function jrst_base_views_default_views() {
   $handler->override_option('sorts', array(
     'php' => array(
       'exposed' => FALSE,
-      'order' => 'ASC',
+      'order' => 'unsorted',
       'identifier' => 'unsorted',
       'use_php_setup' => 0,
       'php_setup' => '',
       'php_sort' => '$args = explode(\'+\', $view->args[0]);
 $args = implode(\', \', $args);
-$clause = \'SELECT COUNT(term_data.tid) FROM {term_data} term_data WHERE term_data.tid IN (\' . $args . \') AND term_data.tid IN (SELECT term_node.tid FROM {term_node} term_node WHERE term_node.nid = %d\';
+$clause = \'SELECT COUNT(term_data.tid) FROM {term_data} term_data WHERE term_data.tid IN (\' . $args . \') AND term_data.tid IN (SELECT term_node.tid FROM {term_node} term_node WHERE term_node.nid = %d)\';
 
 $nid = $row1->nid;
 
 $result1 = db_result(db_query($clause, $row1->nid));
 $result2 = db_result(db_query($clause, $row2->nid));
-return ($result1 > $result2) ? -1 : (($result1 = $result2) ? 0 : 1);',
+return ($result1 < $result2) ? -1 : (($result1 = $result2) ? 0 : 1);',
       'sql_sort' => '',
       'id' => 'php',
       'table' => 'views',

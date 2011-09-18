@@ -1,0 +1,321 @@
+<?php
+
+/**
+ * Implementation of hook_perm().
+ */
+function mailhandler_perm() {
+  return array('administer mailhandler');
+}
+
+/**
+ * Implementation of hook_help().
+ */
+function mailhandler_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#mailhandler':
+      // Return a line-break version of README.txt and INSTALL.txt.
+      $help = "README.txt\n";
+      $help .= "==========\n";
+      $help .= file_get_contents( dirname(__FILE__) . "/README.txt");
+      $help .= "\nINSTALL.txt\n";
+      $help .= "===========\n";
+      $help .= file_get_contents( dirname(__FILE__) . "/INSTALL.txt");
+      return filter_filter('process', 1, NULL, $help);
+    case 'admin/build/mailhandler/add':
+      return 'Please see the <a href="http://drupal.org/node/207366">handbook page on configuring mailboxes</a> for additional help.';
+    case 'admin/build/feeds/edit/%':
+      if ($arg[6] == 'MailhandlerParser') {
+        return 'Please see the <a href="http://drupal.org/node/1158574">handbook page on configuring commands</a> for additional help.';
+      }
+      break;
+  }
+}
+
+/**
+ * Determine from address either using the mailbox setting or via the header information
+ *
+ * @param $header
+ *   Object message header information
+ * @param $mailbox
+ *   Array mailbox settings
+ * @return array
+ */
+function mailhandler_get_fromaddress($header, $mailbox) {
+  if (($fromheader = drupal_strtolower($mailbox->settings['fromheader'])) && isset($header->$fromheader)) {
+    $from = $header->$fromheader;
+  }
+  else {
+    $from = $header->from;
+  }
+  return array($from[0]->mailbox . '@' . $from[0]->host, (isset($from[0]->personal)) ? $from[0]->personal : '');
+}
+
+/**
+ * @TODO this should not live here.
+ *
+ * Look up a user based on their mailalias addresses
+ *
+ * Helper function for mailhandler_authenticate_tokenauth()
+ *
+ * @param $fromaddress
+ *   String from address
+ * @param $node
+ *   Object node object
+ * @param $mailbox
+ *   Array of mailhandler mailbox configuration
+ *
+ * @return Object user object or FALSE
+ */
+function mailhandler_user_load_alias($fromaddress) {
+  $result = db_query("SELECT mail FROM {users} WHERE data LIKE '%%%s%%'", $fromaddress);
+  while ($alias = db_result($result)) {
+    if ($from_user = user_load(array('mail' => $mail))) {
+      return $from_user;
+      break;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_ctools_plugin_type().
+ */
+function mailhandler_ctools_plugin_type() {
+  return array(
+    'authenticate_plugin' => array(),
+    'commands_plugin' => array(),
+    'filters_plugin' => array(
+      'use hooks' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function mailhandler_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && $plugin == 'export_ui') {
+    return 'plugins/' . $plugin;
+  }
+  if ($module == 'mailhandler') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implementation of hook_ctools_plugin_api().
+ */
+function mailhandler_ctools_plugin_api($module, $api) {
+  if ($module == 'mailhandler' && $api == 'commands_plugin') {
+    return array(
+      'version' => 1,
+    );
+  }
+  elseif ($module == 'mailhandler' && $api == 'authenticate_plugin') {
+    return array(
+      'version' => 1,
+    );
+  }
+  elseif ($module == 'mailhandler' && $api == 'filters_plugin') {
+    return array(
+      'version' => 1,
+    );
+  }
+}
+
+/**
+ * Implements hook_mailhandler_filters_plugin().
+ */
+function mailhandler_mailhandler_filters_plugin() {
+  $plugins = array();
+  $plugins['all'] = array(
+    'name' => 'all',
+    'handler' => array(
+      'file' => 'filters.inc',
+      'path' => drupal_get_path('module', 'mailhandler') . '/plugins/filters_plugin',
+      'function' => 'mailhandler_filter_all',
+    ),
+    'description' => 'All messages',
+  );
+  $plugins['nodes'] = array(
+    'name' => 'nodes',
+    'handler' => array(
+      'file' => 'filters.inc',
+      'path' => drupal_get_path('module', 'mailhandler') . '/plugins/filters_plugin',
+      'function' => 'mailhandler_filter_nodes',
+    ),
+    'description' => 'Nodes only',
+  );
+  $plugins['comments'] = array(
+    'name' => 'comments',
+    'handler' => array(
+      'file' => 'filters.inc',
+      'path' => drupal_get_path('module', 'mailhandler') . '/plugins/filters_plugin',
+      'function' => 'mailhandler_filter_comments',
+    ),
+    'description' => 'Comments only',
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_feeds_plugins().
+ */
+function mailhandler_feeds_plugins() {
+  $info = array();
+  $info['MailhandlerFetcher'] = array(
+    'name' => 'Mailhandler fetcher',
+    'description' => 'Connects to an IMAP/POP mailbox.',
+    'handler' => array(
+      'parent' => 'FeedsFetcher',
+      'class' => 'MailhandlerFetcher',
+      'file' => 'MailhandlerFetcher.inc',
+      'path' => drupal_get_path('module', 'mailhandler') . '/plugins',
+    ),
+  );
+  $info['MailhandlerParser'] = array(
+    'name' => 'Mailhandler IMAP stream parser',
+    'description' => 'Parses an IMAP stream.',
+    'handler' => array(
+      'parent' => 'FeedsParser',
+      'class' => 'MailhandlerParser',
+      'file' => 'MailhandlerParser.inc',
+      'path' => drupal_get_path('module', 'mailhandler') . '/plugins',
+    ),
+  );
+  return $info;
+}
+
+/*
+ * Wrapper to load any class type
+ */
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function mailhandler_plugin_load_class($module, $plugin, $type, $id, $args = NULL) {
+  ctools_include('plugins');
+  if ($class = ctools_plugin_load_class($module, $type, $plugin, 'handler')) {
+    return new $class($args);
+  }
+  // TODO: handle case where plugin is unable to load.
+}
+
+/**
+ * @TODO document this.
+ *
+ * @param $type
+ *   String - type of mailhandler plugins to retrieve.
+ */
+function mailhandler_get_plugins($module, $type) {
+  ctools_include('plugins');
+  $plugins = ctools_get_plugins($module, $type);
+  $result = array();
+  $weights = array();
+  foreach ($plugins as $key => $info) {
+    if (!empty($info['hidden'])) {
+      continue;
+    }
+    if (!isset($info['weight'])) {
+      $info['weight'] = 10;
+    }
+    $weights[] = $info['weight'];
+    $result[$key] = $info;
+  }
+  array_multisort($weights, $result);
+  return $result;
+}
+
+/**
+ * Implementation of hook_filter().
+ */
+function mailhandler_filter($op, $delta = 0, $format = -1, $text = '', $cache_id = 0) {
+  switch ($op) {
+    case 'list':
+      return mailhandler_filter_list();
+
+    case 'description':
+      return mailhandler_filter_description($delta);
+
+    case 'process':
+      return mailhandler_filter_process($delta, $format, $text, $cache_id);
+
+    case 'settings':
+      return mailhandler_filter_settings($format);
+
+    default:
+      return $text;
+  }
+}
+
+function mailhandler_filter_list() {
+  return array(
+    0 => t('Mailhandler signature remover'),
+  );
+}
+
+function mailhandler_filter_description($delta = 0) {
+  switch ($delta) {
+    case 0:
+      return t('Strips signatures from emails.');
+  }
+}
+
+function mailhandler_filter_process($delta = 0, $format = -1, $text = '', $cache_id = 0) {
+  switch ($delta) {
+    case '0':
+      $strip_body_regex = variable_get("mailhandler_filter_$format", '-- ') . "\n";
+      $sig_index = strpos($text, $strip_body_regex);
+      if ($sig_index !== FALSE) {
+        $text = drupal_substr($text, 0, $sig_index);
+      }
+      return $text;
+  }
+}
+
+function mailhandler_filter_settings($format) {
+  $form['mailhandler_filter'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Strip signature'),
+    '#collapsible' => TRUE,
+  );
+  $form['mailhandler_filter']["sig_separator_$format"] = array(
+    '#type' => 'textfield',
+    '#title' => t('Signature separator'),
+    '#default_value' => variable_get("mailhandler_filter_$format", '-- '),
+    '#description' => t('After the first line matching this string, any further text will be hidden. A typical value is <strong>"-- "</strong> that is two dashes followed by a blank in an otherwise empty line. Leave blank to include signature text in nodes.'),
+  );
+  return $form;
+}
+
+/**
+ * Load a mailbox.
+ *
+ * @param $name
+ *   This mailbox's name value.
+ * @return
+ *   An array of options for the specified mailbox.
+ */
+function mailhandler_mailbox_load($mail) {
+  // Use Ctools export API to fetch this mailbox.
+  ctools_include('export');
+  $result = ctools_export_load_object('mailhandler_mailbox', 'names', array($mail));
+  if (isset($result[$mail])) {
+    return $result[$mail];
+  }
+}
+
+function mailhandler_mailboxes_load() {
+  // Use Ctools export API to fetch this mailbox.
+  ctools_include('export');
+  $result = ctools_export_load_object('mailhandler_mailbox', 'all');
+  return $result;
+}
+
+/**
+ * Clear Feeds' cache on Mailhandler enable - without this, Feeds may complain
+ * about missing plugins
+ */
+function mailhandler_enable() {
+  cache_clear_all('plugins:feeds:plugins', 'cache');
+}

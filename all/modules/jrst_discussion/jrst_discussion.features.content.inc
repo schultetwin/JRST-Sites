@@ -11,9 +11,10 @@ function jrst_discussion_content_default_fields() {
     'field_name' => 'field_discussion_article',
     'type_name' => 'discussion',
     'display_settings' => array(
+      'weight' => '-4',
+      'parent' => '',
       'label' => array(
-        'format' => 'above',
-        'exclude' => 0,
+        'format' => 'inline',
       ),
       'teaser' => array(
         'format' => 'default',
@@ -73,11 +74,6 @@ function jrst_discussion_content_default_fields() {
         ),
       ),
       'default_value_php' => NULL,
-      'label' => 'Article',
-      'weight' => '-4',
-      'description' => 'Select an article to create a discussion for. (Note, normally, no end user should see this.)',
-      'type' => 'nodereference_select',
-      'module' => 'nodereference',
       'roles' => array(
         '1' => 0,
         '2' => 0,
@@ -88,6 +84,20 @@ function jrst_discussion_content_default_fields() {
         '8' => 0,
         '5' => 0,
       ),
+      'node_link' => array(
+        'destination' => 'default',
+        'full' => 1,
+        'hover_title' => '',
+        'teaser' => 0,
+        'title' => 'Create Discussion',
+      ),
+      'fallback' => 'select',
+      'edit_fallback' => 0,
+      'label' => 'Article',
+      'weight' => '-4',
+      'description' => 'Select an article to create a discussion for. (Note, normally, no end user should see this.)',
+      'type' => 'nodereference_url',
+      'module' => 'nodereference_url',
     ),
   );
 

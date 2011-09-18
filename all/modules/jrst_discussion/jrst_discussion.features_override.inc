@@ -25,7 +25,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'body_field',
           ),
         ),
-        'value' => '-2',
+        'value' => '-3',
       ),
       1 => array(
         'keys' => array(
@@ -38,7 +38,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'revision_information',
           ),
         ),
-        'value' => '3',
+        'value' => '2',
       ),
       2 => array(
         'keys' => array(
@@ -51,7 +51,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'author',
           ),
         ),
-        'value' => '7',
+        'value' => '6',
       ),
       3 => array(
         'keys' => array(
@@ -64,7 +64,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'options',
           ),
         ),
-        'value' => '8',
+        'value' => '7',
       ),
       4 => array(
         'keys' => array(
@@ -77,7 +77,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'comment_settings',
           ),
         ),
-        'value' => '5',
+        'value' => '4',
       ),
       5 => array(
         'keys' => array(
@@ -90,7 +90,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'menu',
           ),
         ),
-        'value' => '4',
+        'value' => '3',
       ),
       6 => array(
         'keys' => array(
@@ -103,7 +103,7 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'taxonomy',
           ),
         ),
-        'value' => '-3',
+        'value' => '-4',
       ),
       7 => array(
         'keys' => array(
@@ -116,22 +116,9 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'path',
           ),
         ),
-        'value' => '6',
+        'value' => '5',
       ),
       8 => array(
-        'keys' => array(
-          0 => array(
-            'type' => 'object',
-            'key' => 'value',
-          ),
-          1 => array(
-            'type' => 'array',
-            'key' => 'attachments',
-          ),
-        ),
-        'value' => '10',
-      ),
-      9 => array(
         'keys' => array(
           0 => array(
             'type' => 'object',
@@ -142,9 +129,9 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'flag',
           ),
         ),
-        'value' => '2',
+        'value' => '1',
       ),
-      10 => array(
+      9 => array(
         'keys' => array(
           0 => array(
             'type' => 'object',
@@ -155,9 +142,23 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'og_nodeapi',
           ),
         ),
-        'value' => '1',
+        'value' => '0',
       ),
-      11 => array(
+    ),
+    'deletions' => array(
+      0 => array(
+        'keys' => array(
+          0 => array(
+            'type' => 'object',
+            'key' => 'value',
+          ),
+          1 => array(
+            'type' => 'array',
+            'key' => 'attachments',
+          ),
+        ),
+      ),
+      1 => array(
         'keys' => array(
           0 => array(
             'type' => 'object',
@@ -168,10 +169,8 @@ function jrst_discussion_default_features_overrides() {
             'key' => 'workflow',
           ),
         ),
-        'value' => '9',
       ),
     ),
-    'deletions' => array(),
   );
 
   $export['discussion_change'] = $features_override;

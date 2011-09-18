@@ -1,0 +1,39 @@
+.feeds-tamper-table {
+  margin-top: 3em;
+}
+
+.feeds-tamper-table caption {
+  font-size: 110%;
+  font-weight: bold;
+  padding-bottom: 0.5em;
+  text-align: left;
+}
+
+.feeds-tamper-table tr.disabled td{
+    color: #AAAAAA;
+}
+
+.feeds-tamper-table tr.disabled {
+    color: #AAAAAA;
+    background-color: #F5F5F5;
+}
+
+.feeds-tamper-table table {
+  margin: .5em;
+}
+
+.feeds-tamper-table .feeds-tamper-add {
+  line-height: 1.2em;
+}
+
+/* Style add plugin form. */
+
+/* hide the next button when not degrading to non-javascript browser */
+html.js .no-js {
+  display: none;
+}
+
+/* Make Choose button come up next to select. */
+#edit-plugin-id-wrapper {
+  display: inline-block;
+}

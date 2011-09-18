@@ -8,6 +8,15 @@ function journal_article_jrst_ctools_plugin_api() {
   if ($module == "context" && $api == "context") {
     return array("version" => 3);
   }
+  elseif ($module == "feeds" && $api == "feeds_importer_default") {
+    return array("version" => 1);
+  }
+  elseif ($module == "feeds_tamper" && $api == "feeds_tamper_default") {
+    return array("version" => 2);
+  }
+  elseif ($module == "mailhandler") {
+    return array("version" => 1);
+  }
   elseif ($module == "strongarm" && $api == "strongarm") {
     return array("version" => 1);
   }
