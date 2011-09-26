@@ -24,6 +24,6 @@ function view_comments_preprocess_comment(&$variables, $hook) {
     foreach ($variables as $key => $value) {
       unset($variables[$key]);
     }
+    unset($variables);
   }
-
 }
