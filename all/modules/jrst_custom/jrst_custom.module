@@ -26,3 +26,10 @@ function jrst_custom_form_alter(&$form, &$form_state, $form_id) {
 
   }
 }
+
+function jrst_custom_link_alter(&$links, $node, $comment = NULL) {
+  $one = 1;
+  if ($node->type == 'blog') {
+    unset($links['blog_usernames_blog']);
+  }
+}
