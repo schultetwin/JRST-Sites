@@ -1,0 +1,7 @@
+; $Id$ 
+name = JRST
+description = Custom Module for JRST
+package = Other
+version = 
+core = 
+php = 

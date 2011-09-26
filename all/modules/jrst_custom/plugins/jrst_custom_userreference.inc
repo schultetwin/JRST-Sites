@@ -1,14 +1,14 @@
 <?php
 
 $plugin = array(
-  'form' => 'feeds_tamper_jrst_custom_userreference_form',
-  'callback' => 'feeds_tamper_jrst_custom_userreference_callback',
+  'form' => 'jrst_custom_plugin_userreference_form',
+  'callback' => 'jrst_custom_plugin_userreference_callback',
   'name' => 'JRST Custom User Reference',
   'multi' => 'loop',
   'category' => 'Other',
 );
 
-function feeds_tamper_jrst_custom_userreference_form($importer, $element_key, $settings) {
+function jrst_custom_plugin_userreference_form($importer, $element_key, $settings) {
   $form = array();
   $form['filter_roles'] = array(
     '#type' => 'checkboxes',
@@ -33,7 +33,7 @@ function feeds_tamper_jrst_custom_userreference_form($importer, $element_key, $s
   return $form;
 }
 
-function feeds_tamper_jrst_custom_userreference_callback($result, $item_key, $element_key, &$field, $settings) {
+function jrst_custom_plugin_userreference_callback($result, $item_key, $element_key, &$field, $settings) {
   $fields = explode(' ', $field);
   foreach ($fields as $f) {
     $sql = "SELECT u.uid FROM {users} u LEFT JOIN {profile_values} p ON u.uid = p.uid LEFT JOIN {users_roles} r ON r.uid = u.uid WHERE p.fid = %d AND p.value LIKE '%s' AND u.uid IN (SELECT r.uid FROM {users_roles} r WHERE r.rid IN (%s))";

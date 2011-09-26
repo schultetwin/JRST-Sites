@@ -6,15 +6,15 @@
  */
 
 $plugin = array(
-  'form' => 'feeds_tamper_special_explode_form',
-  'callback' => 'feeds_tamper_special_explode_callback',
-  'validate' => 'feeds_tamper_special_explode_validate',
+  'form' => 'jrst_custom_plugin_special_explode_form',
+  'callback' => 'jrst_custom_plugin_special_explode_callback',
+  'validate' => 'jrst_custom_plugin_special_explode_validate',
   'name' => 'Special Explode',
   'multi' => 'direct',
   'category' => 'List',
 );
 
-function feeds_tamper_special_explode_form($importer, $element_key, $settings) {
+function jrst_custom_plugin_special_explode_form($importer, $element_key, $settings) {
   $form = array();
   $form['separator'] = array(
     '#type' => 'textfield',
@@ -45,7 +45,7 @@ function feeds_tamper_special_explode_form($importer, $element_key, $settings) {
   return $form;
 }
 
-function feeds_tamper_special_explode_validate(&$settings) {
+function jrst_custom_plugin_special_explode_validate(&$settings) {
   $settings['real_separator'] = str_replace(array('%s', '%t', '%n'), array(' ', "\t", "\n"), $settings['separator']);
   $settings['limit'] = trim($settings['limit']);
   if ($settings['limit'] === '0') {
@@ -62,7 +62,7 @@ function feeds_tamper_special_explode_validate(&$settings) {
   }
 }
 
-function feeds_tamper_special_explode_callback($source, $item_key, $element_key, &$field, $settings) {
+function jrst_custom_plugin_special_explode_callback($source, $item_key, $element_key, &$field, $settings) {
   $out = array();
   if (!is_array($field)) {
     $field = array($field);
