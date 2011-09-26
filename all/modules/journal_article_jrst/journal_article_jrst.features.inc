@@ -15,7 +15,7 @@ function journal_article_jrst_ctools_plugin_api() {
     return array("version" => 2);
   }
   elseif ($module == "mailhandler") {
-    return array("version" => 1);
+    return array("version" => 1 );
   }
   elseif ($module == "strongarm" && $api == "strongarm") {
     return array("version" => 1);
