@@ -7,6 +7,8 @@
 
 /**
  * Implements hook_ctools_plugin_directory().
+ *
+ * Defines custom plugins for feed tamper, pulling them into this module
  */
 function jrst_custom_ctools_plugin_directory($module, $plugin) {
   if ($module == 'feeds_tamper') {
@@ -14,6 +16,12 @@ function jrst_custom_ctools_plugin_directory($module, $plugin) {
   }
 }
 
+/**
+ * Implementation of hook_form_alter().
+ *
+ * Removes text from e-mail address in form that tells user how the email address will be private.
+ * Make sure the taxonomy form in the group is not in a vertical tab
+ */
 function jrst_custom_form_alter(&$form, &$form_state, $form_id) {
   switch ($form_id) {
     case 'user_profile_form':
@@ -27,9 +35,22 @@ function jrst_custom_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+/**
+ * Implementation of hook_link_alter().
+ *
+ * Remove user_name blog link from blog entries
+ */
 function jrst_custom_link_alter(&$links, $node, $comment = NULL) {
-  $one = 1;
   if ($node->type == 'blog') {
     unset($links['blog_usernames_blog']);
   }
+}
+
+/**
+ * Implementation of hook_link().
+ *
+ * Defines "create new" node link
+ */
+function jrst_custom_link($type, $object, $teaser = FALSE) {
+  
 }
