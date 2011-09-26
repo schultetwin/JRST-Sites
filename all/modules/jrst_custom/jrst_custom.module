@@ -52,5 +52,21 @@ function jrst_custom_link_alter(&$links, $node, $comment = NULL) {
  * Defines "create new" node link
  */
 function jrst_custom_link($type, $object, $teaser = FALSE) {
-  
+  if ($type == 'node' && !$teaser) {
+    if (empty($object->og_groups)) {
+      $links['add_new_content'] = array(
+        'title' => t('Create New @type', array('@type' => $object->type)),
+        'href' => 'node/add/' . $object->type,
+      );
+    }
+    else {
+      $links['add_new_content'] = array(
+        'title' => t('Create New @type', array('@type' => $object->type)),
+        'href' => 'node/add/' . $object->type,
+        'query' => 'gids[0]=' . implode('+', $object->og_groups),
+      );
+      
+    }
+  }
+  return $links;
 }
