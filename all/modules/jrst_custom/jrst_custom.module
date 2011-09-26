@@ -20,5 +20,9 @@ function jrst_custom_form_alter(&$form, &$form_state, $form_id) {
     case 'user_register':
       $form['account']['mail']['#description'] = t('A valid e-mail address. All e-mails will be sent to this address');
       break;
+    case 'group_node_form':
+      $form['taxonomy']['#group'] = FALSE;
+      break;
+
   }
 }
