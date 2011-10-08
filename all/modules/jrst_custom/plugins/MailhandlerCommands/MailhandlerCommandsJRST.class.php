@@ -33,9 +33,9 @@ class MailhandlerCommandsJRST extends MailhandlerCommandsDefault {
           $next_line = $lines[$i+1];
           $nl_words = explode(' ', $next_line);
           if (!drupal_substr($nl_words[0], -1) == ':' && !isset($endcommands)) {
-            $commands[$i][1] .= $next_line;
+            $commands[$i][1] .= ' ' . $next_line;
             unset($lines[$i+1]);
-            $lines = array_values($lines);
+            $i++;
           }
         }
       }
