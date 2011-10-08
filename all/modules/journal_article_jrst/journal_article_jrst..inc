@@ -16,7 +16,7 @@ function journal_article_jrst_default_mailhandler_mailbox() {
     'port' => '110',
     'name' => 'auto@ejrst.net',
     'pass' => 'birthday1993',
-    'extraimap' => '/tls/novalidate-cert/debug',
+    'extraimap' => '/tls/novalidate-cert',
     'limit' => '',
     'encoding' => '',
     'mime' => 'TEXT/PLAIN,TEXT/HTML',
