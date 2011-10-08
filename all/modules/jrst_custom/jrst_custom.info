@@ -2,6 +2,6 @@
 name = JRST
 description = Custom Module for JRST
 package = Other
-version = 
-core = 
+version = 6.x-1.x-dev
+core = 6.x
 php = 

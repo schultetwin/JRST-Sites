@@ -20,17 +20,6 @@ function jrst_custom_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * Implements hook_ctools_plugin_api().
- */
-function jrst_custom_ctools_plugin_api($module, $api) {
-  if ($module == 'mailhandler' && $api == 'commands_plugin') {
-    return array(
-      'version' => 1,
-    );
-  }
-}
-
-/**
  * Implementation of hook_form_alter().
  *
  * Removes text from e-mail address in form that tells user how the email address will be private.
