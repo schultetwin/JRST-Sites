@@ -1,5 +1,4 @@
 <?php
-// $Id: features_override.module,v 1.5.2.4 2011/02/19 03:47:31 nedjo Exp $
 
 /**
  * @file
@@ -400,24 +399,24 @@ function _features_override_set_additions($default, $normal, &$additions, $keys 
       return;
     }
     if ($object) {
-      if (!isset($default->$key) || ($default->$key != $value && !(is_array($value) || is_object($value)))) {
+      if (!isset($default->$key) || ($default->$key !== $value && !(is_array($value) || is_object($value)))) {
         $additions[] = array(
           'keys' => array_merge($keys, array(array('type' => 'object', 'key' => $key))),
           'value' => $value,
         );
       }
-      elseif (isset($default->$key) && $default->$key != $value) {
+      elseif (isset($default->$key) && $default->$key !== $value) {
         _features_override_set_additions($default->$key, $value, $additions, array_merge($keys, array(array('type' => 'object', 'key' => $key))));
       }
     }
     else {
-      if (!isset($default[$key]) || ($default[$key] != $value && !(is_array($value) || is_object($value)))) {
+      if (!isset($default[$key]) || ($default[$key] !== $value && !(is_array($value) || is_object($value)))) {
         $additions[] = array(
           'keys' => array_merge($keys, array(array('type' => 'array', 'key' => $key))),
           'value' => $value,
         );
       }
-      elseif (isset($default[$key]) && $default[$key] != $value) {
+      elseif (isset($default[$key]) && $default[$key] !== $value) {
         _features_override_set_additions($default[$key], $value, $additions, array_merge($keys, array(array('type' => 'array', 'key' => $key))));
       }
     }

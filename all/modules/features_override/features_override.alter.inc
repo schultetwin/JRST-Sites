@@ -1,5 +1,4 @@
 <?php
-// $Id: features_override.alter.inc,v 1.1.2.1 2011/02/19 03:45:02 nedjo Exp $
 
 /**
  * Alter default features.

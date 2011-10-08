@@ -29,13 +29,6 @@ function features_override_menu_default_items_alter(&$items) {
 }
 
 /**
- * Implementation of hook_node_info_alter().
- */
-function features_override_node_info_alter(&$items) {
-  features_override_features_default_alter($items, "node");
-}
-
-/**
  * Implementation of hook_taxonomy_default_vocabularies_alter().
  */
 function features_override_taxonomy_default_vocabularies_alter(&$items) {
@@ -68,4 +61,32 @@ function features_override_content_default_fields_alter(&$items) {
  */
 function features_override_imagecache_default_presets_alter(&$items) {
   features_override_features_default_alter($items, "imagecache");
+}
+
+/**
+ * Implementation of hook_fieldgroup_default_groups_alter().
+ */
+function features_override_fieldgroup_default_groups_alter(&$items) {
+  features_override_features_default_alter($items, "fieldgroup");
+}
+
+/**
+ * Implementation of hook_conditional_fields_default_fields_alter().
+ */
+function features_override_conditional_fields_default_fields_alter(&$items) {
+  features_override_features_default_alter($items, "conditional_fields");
+}
+
+/**
+ * Implementation of hook_rules_defaults_alter().
+ */
+function features_override_rules_defaults_alter(&$items) {
+  features_override_features_default_alter($items, "rules_categories");
+}
+
+/**
+ * Implementation of hook_heartbeat_message_info_alter().
+ */
+function features_override_heartbeat_message_info_alter(&$items) {
+  features_override_features_default_alter($items, "heartbeat");
 }

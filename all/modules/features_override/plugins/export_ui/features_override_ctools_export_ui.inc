@@ -1,5 +1,4 @@
 <?php
-// $Id: features_override_ctools_export_ui.inc,v 1.2.2.1 2011/02/12 05:21:24 nedjo Exp $
 
 $plugin = array(
   'schema' => 'features_override',

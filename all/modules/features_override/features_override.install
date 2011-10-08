@@ -1,11 +1,11 @@
 <?php
-// $Id: features_override.install,v 1.1.2.1 2011/02/12 05:21:24 nedjo Exp $
 
 /**
  * Implementation of hook_install().
  */
 function features_override_install() {
   drupal_install_schema('features_override');
+  features_override_set_module_weight();
 }
 
 /**
@@ -75,4 +75,25 @@ function features_override_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Helper function to set module weight lower than strongarm.
+ *
+ * This allows features_override_strongarm_alter() to be declared before
+ * strongarm_init() is called, so we can alter variables at runtime.
+ *
+ * @see http://drupal.org/node/1271306
+ */
+function features_override_set_module_weight() {
+  $ret = array();
+  $ret[] = update_sql("update {system} set weight = -1001 where name = 'features_override'");
+  return $ret;
+}
+
+/**
+ * Update 6100: Set module weight lower than strongarm.
+ */
+function features_override_update_6100() {
+  return features_override_set_module_weight();
 }

@@ -10,6 +10,8 @@ function features_override_extend() {
   foreach (features_get_components() as $component => $info) {
     if (isset($info['default_hook']) && 
       (!isset($info['module']) || $info['module'] != 'features_override') && 
+      // No hook_node_info_alter().
+      $info['default_hook'] != 'node_info' &&
       !module_hook('features_override', $info['default_hook'] . '_alter')) {
       $components[] = isset($info['name']) ? $info['name']  . ' (' . $component . ')' : $component;
     }
@@ -45,6 +47,7 @@ function features_override_generate() {
   foreach (features_get_components() as $component => $info) {
     if (isset($info['default_hook']) && 
       (!isset($info['module']) || $info['module'] != 'features_override') && 
+      $info['default_hook'] != 'node_info' &&
       !module_hook('features_override', $info['default_hook'] . '_alter')) {
       // Assign any component that doesn't specify a module to the features 
       // module.
