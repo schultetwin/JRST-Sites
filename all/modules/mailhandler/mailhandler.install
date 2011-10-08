@@ -52,6 +52,12 @@ function mailhandler_schema() {
       'key name' => 'Email address',
       'primary key' => 'mid',
       'identifier' => 'mailbox',
+      'api' => array(
+        'owner' => 'mailhandler',
+        'api' => 'default_mailhandler_mailbox',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
     ),
   );
   return $schema;

@@ -9,7 +9,9 @@ function journal_article_jrst_user_default_permissions() {
   // Exported permission: clear mail_impor feeds
   $permissions['clear mail_impor feeds'] = array(
     'name' => 'clear mail_impor feeds',
-    'roles' => array(),
+    'roles' => array(
+      '0' => 'site admin',
+    ),
   );
 
   // Exported permission: create article content
@@ -205,7 +207,9 @@ function journal_article_jrst_user_default_permissions() {
   // Exported permission: edit field_article_resubmit
   $permissions['edit field_article_resubmit'] = array(
     'name' => 'edit field_article_resubmit',
-    'roles' => array(),
+    'roles' => array(
+      '0' => 'site admin',
+    ),
   );
 
   // Exported permission: edit field_article_scholarone_id
@@ -349,7 +353,9 @@ function journal_article_jrst_user_default_permissions() {
   // Exported permission: import mail_impor feeds
   $permissions['import mail_impor feeds'] = array(
     'name' => 'import mail_impor feeds',
-    'roles' => array(),
+    'roles' => array(
+      '0' => 'site admin',
+    ),
   );
 
   // Exported permission: view comments for: article
@@ -357,6 +363,7 @@ function journal_article_jrst_user_default_permissions() {
     'name' => 'view comments for: article',
     'roles' => array(
       '0' => 'authenticated user',
+      '1' => 'site admin',
     ),
   );
 
@@ -484,7 +491,9 @@ function journal_article_jrst_user_default_permissions() {
   // Exported permission: view field_article_resubmit
   $permissions['view field_article_resubmit'] = array(
     'name' => 'view field_article_resubmit',
-    'roles' => array(),
+    'roles' => array(
+      '0' => 'site admin',
+    ),
   );
 
   // Exported permission: view field_article_scholarone_id
@@ -580,7 +589,9 @@ function journal_article_jrst_user_default_permissions() {
   // Exported permission: view field_issue_special
   $permissions['view field_issue_special'] = array(
     'name' => 'view field_issue_special',
-    'roles' => array(),
+    'roles' => array(
+      '0' => 'site admin',
+    ),
   );
 
   // Exported permission: view field_issue_volume

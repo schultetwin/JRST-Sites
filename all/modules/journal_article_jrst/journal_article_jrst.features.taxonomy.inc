@@ -33,8 +33,8 @@ function journal_article_jrst_taxonomy_default_vocabularies() {
       'module' => 'features_grade_level',
       'weight' => '0',
       'nodes' => array(
-        'group' => 'group',
         'article' => 'article',
+        'group' => 'group',
       ),
     ),
     'methodology' => array(

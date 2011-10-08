@@ -7,6 +7,7 @@ function journal_article_jrst_default_mailhandler_mailbox() {
   $export = array();
   $mailbox = new stdClass;
   $mailbox->disabled = FALSE; /* Edit this to true to make a default mailbox disabled initially */
+  $mailbox->api_version = 1;
   $mailbox->mail = 'auto_ejrst_net';
   $mailbox->settings = array(
     'mail' => 'auto@ejrst.net',
@@ -16,7 +17,7 @@ function journal_article_jrst_default_mailhandler_mailbox() {
     'port' => '110',
     'name' => 'auto@ejrst.net',
     'pass' => 'birthday1993',
-    'extraimap' => '/tls/novalidate-cert',
+    'extraimap' => '/tls/novalidate-cert/debug',
     'limit' => '',
     'encoding' => '',
     'mime' => 'TEXT/PLAIN,TEXT/HTML',

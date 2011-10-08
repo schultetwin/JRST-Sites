@@ -206,16 +206,16 @@ function journal_article_jrst_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'content_extra_weights_article';
   $strongarm->value = array(
-    'title' => '13',
-    'body_field' => '18',
-    'revision_information' => '35',
-    'author' => '33',
-    'options' => '36',
-    'comment_settings' => '38',
-    'menu' => '34',
-    'taxonomy' => '16',
-    'path' => '37',
-    'workflow' => '10',
+    'title' => '31',
+    'body_field' => '37',
+    'revision_information' => '42',
+    'author' => '40',
+    'options' => '43',
+    'comment_settings' => '45',
+    'menu' => '41',
+    'taxonomy' => '36',
+    'path' => '44',
+    'workflow' => '30',
   );
 
   $export['content_extra_weights_article'] = $strongarm;
@@ -383,104 +383,6 @@ function journal_article_jrst_strongarm() {
   $strongarm->value = 1;
 
   $export['enable_revisions_page_article_import'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_admin_subject_ops';
-  $strongarm->value = 'new,revision,resubmit,unpublish';
-
-  $export['mc_import_admin_subject_ops'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_admin_subject_place';
-  $strongarm->value = '2';
-
-  $export['mc_import_admin_subject_place'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_cron';
-  $strongarm->value = 1;
-
-  $export['mc_import_cron'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_email';
-  $strongarm->value = 'auto@ejrst.net';
-
-  $export['mc_import_email'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_host';
-  $strongarm->value = 'mail.ejrst.net';
-
-  $export['mc_import_host'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_id_field';
-  $strongarm->value = 'field_article_scholarone_id';
-
-  $export['mc_import_id_field'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_node_type';
-  $strongarm->value = 'article';
-
-  $export['mc_import_node_type'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_op_new_function';
-  $strongarm->value = 'create';
-
-  $export['mc_import_op_new_function'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_op_new_id_field';
-  $strongarm->value = 'field_article_scholarone_id';
-
-  $export['mc_import_op_new_id_field'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_op_new_node_type';
-  $strongarm->value = 'article';
-
-  $export['mc_import_op_new_node_type'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_options';
-  $strongarm->value = '/tls/novalidate-cert';
-
-  $export['mc_import_options'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_password';
-  $strongarm->value = 'birthday1993';
-
-  $export['mc_import_password'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_port';
-  $strongarm->value = '110';
-
-  $export['mc_import_port'] = $strongarm;
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'mc_import_prot';
-  $strongarm->value = 'pop3';
-
-  $export['mc_import_prot'] = $strongarm;
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;

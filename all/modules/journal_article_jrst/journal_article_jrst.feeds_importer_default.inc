@@ -51,7 +51,7 @@ decision
 decision_date',
         'command_plugin' => array(
           'MailhandlerCommandsHeaders' => 'MailhandlerCommandsHeaders',
-          'MailhandlerCommandsDefault' => 'MailhandlerCommandsDefault',
+          'MailhandlerCommandsJRST' => 'MailhandlerCommandsJRST',
           'MailhandlerCommandsFiles' => 'MailhandlerCommandsFiles',
         ),
         'authenticate_plugin' => 'MailhandlerAuthenticateDefault',
