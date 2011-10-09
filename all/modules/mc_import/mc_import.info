@@ -1,4 +1,0 @@
-core = "6.x"
-description = "Importing mail from Manuscript Central"
-name = "MC Import"
-package = "JRST"
