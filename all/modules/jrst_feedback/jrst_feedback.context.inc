@@ -24,7 +24,7 @@ function jrst_feedback_context_default_contexts() {
         'feedback-form' => array(
           'module' => 'feedback',
           'delta' => 'form',
-          'region' => 'sidebar_last',
+          'region' => 'footer',
           'weight' => 0,
         ),
       ),
